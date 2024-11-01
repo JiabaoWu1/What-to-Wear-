@@ -1,4 +1,4 @@
-import WeatherCard from "./WeatherCard/WeatherCard1";
+import WeatherCard from "./WeatherCard/WeatherCard";
 
 function Main() {
   return (
