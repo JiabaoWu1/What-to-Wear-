@@ -8,7 +8,7 @@ import ItemModal from "./ItemModal/ItemModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({ type: "hot" });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("preview");
   const [selectedCard, setSelectedCard] = useState({});
 
   const handleCardClick = (card) => {
@@ -28,7 +28,7 @@ function App() {
     <div className="page">
       <div className="page__content">
         <Header handleAddClick={handleAddClick} />
-        <Main weatherData={weatherData} />
+        <Main weatherData={weatherData} handleCardClick={handleCardClick} />
       </div>
       <ModalWithForm
         title="New Garment"
@@ -46,7 +46,7 @@ function App() {
             placeholder="Name"
           />
         </label>
-        <label htmlFor="mageURL" className="modal__image">
+        <label htmlFor="imageURL" className="modal__image">
           Image{" "}
           <input
             type="url"
