@@ -1,6 +1,7 @@
 import WeatherCard from "./WeatherCard/WeatherCard";
 import ItemCard from "./ItemCard/ItemCard";
 import { defaultClothingItems } from "../../../utils/constants";
+import "../Main/Main.css";
 
 function Main({ weatherData }) {
   return (

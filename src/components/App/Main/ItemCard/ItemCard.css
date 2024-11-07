@@ -1,11 +1,13 @@
 .card {
+  margin: 0;
+  padding: 0;
   width: 323px;
   height: 326px;
   position: relative;
   display: flex;
   justify-content: center;
   border: 1px solid #0000004d;
-  border-radius: 19px;
+  border-radius: 20px;
 }
 
 .card__name {
@@ -25,4 +27,5 @@
 .card__image {
   width: 100%;
   gap: 20px;
+  border-radius: 20px;
 }
