@@ -5,9 +5,9 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
-
+import Footer from "./Footer/Footer";
 function App() {
-  const [weatherData, setWeatherData] = useState({ type: "hot" });
+  const [weatherData, setWeatherData] = useState("");
   const [activeModal, setActiveModal] = useState("preview");
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -23,6 +23,8 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
   };
+
+  const isOpen = () => {};
 
   return (
     <div className="page">
@@ -78,10 +80,13 @@ function App() {
         </fieldset>
       </ModalWithForm>
       <ItemModal
-        activeModal={activeModal}
+        isOpen={activeModal === "preview"}
         card={selectedCard}
         onClose={closeActiveModal}
       />
+      <div className="page__footer">
+        <Footer />
+      </div>
     </div>
   );
 }
