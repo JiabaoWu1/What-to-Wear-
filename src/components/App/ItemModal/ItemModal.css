@@ -1,0 +1,30 @@
+.modal__content {
+  width: 498px;
+  height: 610px;
+  position: relative;
+}
+
+.modal__close {
+  background-image: url(.../assets/CloseButton.svg);
+}
+
+.modal__image {
+  width: 498px;
+  height: 498px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.modal__footer {
+  position: absolute;
+  bottom: 20px;
+}
+
+.modal__caption {
+  margin: 0;
+}
+
+.modal__weather {
+  margin: 12px 0 0;
+}

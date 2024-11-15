@@ -1,12 +1,18 @@
 import "./Header.css";
 import headerLogo from "../../../assets/header__Logo.svg";
 import headerAvatar from "../../../assets/header__Avatar.svg";
-function Header({ handleAddClick }) {
+function Header({ handleAddClick, weatherData }) {
+  const currentDate = new Date().toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
   return (
     <header className="header">
       <img src={headerLogo} alt="TripleTen logo" className="header__logo" />
 
-      <p className="header__date-and-location">Date,location</p>
+      <p className="header__date-and-location">
+        {currentDate},{weatherData.city}
+      </p>
       <button
         onClick={handleAddClick}
         type="button"
