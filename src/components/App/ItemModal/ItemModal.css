@@ -6,6 +6,7 @@
 
 .modal__close {
   background-image: url(.../assets/CloseButton.svg);
+  z-index: 1;
 }
 
 .modal__image {
