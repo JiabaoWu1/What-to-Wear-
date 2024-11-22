@@ -63,7 +63,7 @@ function App() {
             placeholder="Name"
           />
         </label>
-        <label htmlFor="imageURL" className="modal__image">
+        <label htmlFor="imageURL" className="modal__label">
           Image{" "}
           <input
             type="url"
@@ -71,7 +71,6 @@ function App() {
             id="imageURL"
             placeholder="ImageURL"
           />
-          n
         </label>
         <fieldset className="modal__fieldset">
           <legend className="modal__legend">Select the weather type:</legend>

@@ -1,18 +1,14 @@
-.modal__content {
+.modal__content_type_image {
   width: 498px;
   height: 610px;
   position: relative;
 }
 
-.modal__close {
-  background-image: url(.../assets/CloseButton.svg);
-  z-index: 1;
-}
-
 .modal__image {
-  width: 498px;
+  width: 100%;
   height: 498px;
   position: absolute;
+  border-radius: 16px 16px 0 0;
   top: 0px;
   left: 0px;
 }
@@ -20,6 +16,11 @@
 .modal__footer {
   position: absolute;
   bottom: 20px;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
 }
 
 .modal__caption {
