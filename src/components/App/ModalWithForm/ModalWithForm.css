@@ -78,6 +78,7 @@
 .modal__radio-buttons {
   border: none;
   padding: 0;
+  accent-color: black;
 }
 
 .modal__radio-input {
