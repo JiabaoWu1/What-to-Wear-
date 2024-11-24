@@ -1,6 +1,13 @@
 import "./ModalWithForm.css";
 
-function ModalWithForm({ children, title, buttonText, activeModal, onClose }) {
+function ModalWithForm({
+  children,
+  title,
+  buttonText,
+  activeModal,
+  onClose,
+  isOpen,
+}) {
   return (
     <div className={`modal ${activeModal === "add-garment" && "modal_opened"}`}>
       <div className="modal__content">
@@ -22,3 +29,4 @@ function ModalWithForm({ children, title, buttonText, activeModal, onClose }) {
 }
 
 export default ModalWithForm;
+// `modal ${activeModal === "add-garment" && "modal_opened"}`

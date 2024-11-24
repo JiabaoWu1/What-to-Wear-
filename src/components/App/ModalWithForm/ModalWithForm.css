@@ -81,8 +81,8 @@
   accent-color: black;
 }
 
-.modal__radio-input {
-  background: #00000080;
+.modal__radio-input:checked {
+  background: #00000080 50%;
 }
 
 .modal__fieldset {
