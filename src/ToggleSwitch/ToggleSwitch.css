@@ -1,6 +1,7 @@
 .switch {
   display: flex;
   position: relative;
+  justify-content: space-between;
 }
 
 .switch__box {
@@ -23,7 +24,27 @@
 }
 
 .switch__slider-F {
+  left: 19px;
 }
 
 .switch__slider-C {
+}
+
+.switch__temp-F {
+  position: absolute;
+  top: -10px;
+  left: 31px;
+  color: white;
+}
+
+.switch__temp-C {
+  position: absolute;
+  top: -10px;
+  left: 7px;
+  color: white;
+}
+
+.switch__active {
+  font-size: 16px;
+  color: white;
 }

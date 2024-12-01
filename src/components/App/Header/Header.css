@@ -26,3 +26,8 @@
 .header__username {
   margin: 0;
 }
+
+.header__toggle {
+  display: flex;
+  align-items: center;
+}
