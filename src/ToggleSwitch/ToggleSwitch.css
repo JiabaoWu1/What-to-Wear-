@@ -2,6 +2,7 @@
   display: flex;
   position: relative;
   justify-content: space-between;
+  margin-left: auto;
 }
 
 .switch__box {

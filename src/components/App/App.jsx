@@ -7,7 +7,7 @@ import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { currentTemperatureUnitContext } from "./contexts/currentTemperatureUnitContext";
+import { CurrentTemperatureUnitContext } from "./contexts/CurrentTemperatureUnitContext.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className="page">
-      <currentTemperatureUnitContext.Provider
+      <CurrentTemperatureUnitContext.Provider
         value={(currentTemperatureUnit, handleToggleSwitchChange)}
       >
         <div className="page__content">
@@ -127,7 +127,7 @@ function App() {
           onClose={closeActiveModal}
         />
         <div className="page__footer"></div>
-      </currentTemperatureUnitContext.Provider>
+      </CurrentTemperatureUnitContext.Provider>
     </div>
   );
 }
