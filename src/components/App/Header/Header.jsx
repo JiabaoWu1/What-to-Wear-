@@ -14,6 +14,8 @@ function Header({ handleAddClick, weatherData }) {
       <p className="header__date-and-location">
         {currentDate},{weatherData.city}
       </p>
+
+      <ToggleSwitch />
       <button
         onClick={handleAddClick}
         type="button"
@@ -23,7 +25,6 @@ function Header({ handleAddClick, weatherData }) {
         + Add clothes
       </button>
       <div className="header__user-container">
-        <ToggleSwitch />
         <p className="header__username">Terrence T</p>
         <img src={headerAvatar} alt="Terrence T" className="header__avatar" />
       </div>
