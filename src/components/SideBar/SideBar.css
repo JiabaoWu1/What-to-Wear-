@@ -1,0 +1,15 @@
+.sidebar {
+  display: flex;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  padding-right: 16px;
+}
+
+.sidebar__username {
+  width: 157px;
+  margin: auto;
+  padding-right: 116px;
+}

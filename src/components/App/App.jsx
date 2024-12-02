@@ -7,7 +7,7 @@ import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { CurrentTemperatureUnitContext } from "./contexts/CurrentTemperatureUnitContext.js";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -45,7 +45,7 @@ function App() {
       })
       .catch(console.error);
   }, []);
-
+  console.log(currentTemperatureUnit);
   return (
     <div className="page">
       <CurrentTemperatureUnitContext.Provider
