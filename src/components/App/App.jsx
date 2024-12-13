@@ -3,7 +3,6 @@ import "./App.css";
 import { coordinates, APIkey } from "../../utils/constants";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
-import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -49,6 +48,17 @@ function App() {
       .catch(console.error);
   }, []);
   console.log(currentTemperatureUnit);
+
+  useEffect(() => {
+    getClothingItems()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Failed to delete item:", error);
+      });
+  }, []);
+
   return (
     <div className="page">
       <CurrentTemperatureUnitContext.Provider
@@ -63,18 +73,45 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
             <Route
               path="/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  handleAddClick={handleAddClick}
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                  userName={userName}
+                />
+              }
             />
           </Routes>
 
           <Footer />
         </div>
-        <ModalWithForm
+
+        <AddItemModal
+          closeActiveModal={closeActiveModal}
+          isOpen={activeModal === "add-garment"}
+          handleAddItemSubmit={handleAddItemSubmit}
+        />
+        <ItemModal
+          isOpen={activeModal === "preview"}
+          card={selectedCard}
+          onClose={closeActiveModal}
+        />
+      </CurrentTemperatureUnitContext.Provider>
+    </div>
+  );
+}
+
+export default App;
+
+{
+  /* <ModalWithForm
           title="New Garment"
           buttonText="Add garment"
           isOpen={activeModal === "add-garment"}
@@ -138,17 +175,5 @@ function App() {
               Cold
             </label>
           </fieldset>
-        </ModalWithForm>
-        <ItemModal
-          isOpen={activeModal === "preview"}
-          card={selectedCard}
-          onClose={closeActiveModal}
-        />
-        <div className="page__footer"></div>
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
-  );
+        </ModalWithForm> */
 }
-import { formatPostcssSourceMap } from "vite";
-
-export default App;
