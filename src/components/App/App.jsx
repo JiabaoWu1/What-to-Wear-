@@ -7,7 +7,10 @@ import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
+import Profile from "../Profile/Profile.jsx";
+import AddItemModal from "./AddItemModal.jsx";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -53,7 +56,22 @@ function App() {
       >
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={<Profile handleCardClick={handleCardClick} />}
+            />
+          </Routes>
+
           <Footer />
         </div>
         <ModalWithForm
@@ -131,5 +149,6 @@ function App() {
     </div>
   );
 }
+import { formatPostcssSourceMap } from "vite";
 
 export default App;
