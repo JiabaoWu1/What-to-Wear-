@@ -73,7 +73,7 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
-                  // clothingItems={clothingItems}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -84,7 +84,7 @@ function App() {
                   handleAddClick={handleAddClick}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
-                  userName={userName}
+                  // userName={userName}
                 />
               }
             />
@@ -96,7 +96,7 @@ function App() {
         <AddItemModal
           closeActiveModal={closeActiveModal}
           isOpen={activeModal === "add-garment"}
-          handleAddItemSubmit={handleAddItemSubmit}
+          // handleAddItemSubmit={handleAddItemSubmit}
         />
         <ItemModal
           isOpen={activeModal === "preview"}
