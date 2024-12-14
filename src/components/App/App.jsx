@@ -7,7 +7,7 @@ import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import Profile from "../Profile/Profile.jsx";
-import AddItemModal from "./AddItemModal.jsx";
+import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Routes, Route } from "react-router-dom";
 
@@ -73,7 +73,7 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
+                  // clothingItems={clothingItems}
                 />
               }
             />
