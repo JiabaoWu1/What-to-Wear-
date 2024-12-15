@@ -4,7 +4,7 @@ import { defaultClothingItems } from "../../../utils/constants";
 import "../Main/Main.css";
 import { useContext, useMemo } from "react";
 import { CurrentTemperatureUnitContext } from "../../../contexts/CurrentTemperatureUnitContext";
-function Main({ weatherData, handleCardClick }) {
+function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherData?.temperature?.[currentTemperatureUnit];
   const weatherType = useMemo(() => {

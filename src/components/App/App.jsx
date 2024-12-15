@@ -10,6 +10,7 @@ import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Routes, Route } from "react-router-dom";
+import { getItems } from "../../utils/api.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -20,6 +21,8 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [clothingItems, setClothingItems] = useState([]);
+  const [userName, setUserName] = useState("Terrence T");
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -50,7 +53,7 @@ function App() {
   console.log(currentTemperatureUnit);
 
   useEffect(() => {
-    getClothingItems()
+    getItems()
       .then((items) => {
         setClothingItems(items);
       })
@@ -84,7 +87,7 @@ function App() {
                   handleAddClick={handleAddClick}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
-                  // userName={userName}
+                  userName={userName}
                 />
               }
             />
@@ -96,7 +99,6 @@ function App() {
         <AddItemModal
           closeActiveModal={closeActiveModal}
           isOpen={activeModal === "add-garment"}
-          // handleAddItemSubmit={handleAddItemSubmit}
         />
         <ItemModal
           isOpen={activeModal === "preview"}
@@ -110,8 +112,7 @@ function App() {
 
 export default App;
 
-{
-  /* <ModalWithForm
+/* <ModalWithForm
           title="New Garment"
           buttonText="Add garment"
           isOpen={activeModal === "add-garment"}
@@ -176,4 +177,3 @@ export default App;
             </label>
           </fieldset>
         </ModalWithForm> */
-}
