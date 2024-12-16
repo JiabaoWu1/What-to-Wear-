@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ModalWithForm from "../App/ModalWithForm/ModalWithForm";
+import "./AddItemModal.css";
 
 function AddItemModal({ closeActiveModal, onAddItem, isOpen }) {
   const [name, setName] = useState("");
@@ -29,7 +30,7 @@ function AddItemModal({ closeActiveModal, onAddItem, isOpen }) {
     <ModalWithForm
       title="New Garment"
       buttonText="Add Garment"
-      isOpen={isOpen === "add-garment"}
+      isOpen={isOpen}
       onClose={closeActiveModal}
       onSubmit={handleSubmit}
     >
