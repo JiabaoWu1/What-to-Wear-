@@ -18,7 +18,7 @@ const ToggleSwitch = () => {
   );
   console.log(currentTemperatureUnit);
   return (
-    <label htmlFor="" className="switch">
+    <label className="switch">
       <input
         type="checkbox"
         className="switch__box"

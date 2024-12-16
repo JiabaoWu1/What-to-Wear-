@@ -38,7 +38,7 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
           Today is {weatherData?.temp?.F} &deg; F / You may want to wear:
         </p>
         <ul className="cards__list">
-          {defaultClothingItems
+          {clothingItems
             .filter((item) => {
               return item.weather === weatherData.type;
             })
