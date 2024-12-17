@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ModalWithForm from "../App/ModalWithForm/ModalWithForm";
 import "./AddItemModal.css";
 
-function AddItemModal({ closeActiveModal, onAddItem, isOpen }) {
+function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
     console.log(e.target.value);
@@ -21,9 +21,22 @@ function AddItemModal({ closeActiveModal, onAddItem, isOpen }) {
     setWeather(e.target.value);
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!weather) {
+  //     alert("Please select a weather type!");
+  //     return;
+  //   }
+  //   onAddItem({ name, link, weather });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem({ name, link, weather });
+    if (!weather) {
+      alert("Please select a weather type!");
+      return;
+    }
+    onSubmit({ name, imageUrl, weather });
   };
 
   return (
