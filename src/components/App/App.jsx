@@ -10,7 +10,13 @@ import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Routes, Route } from "react-router-dom";
-import { getItems } from "../../utils/api.js";
+import {
+  getItems,
+  addItem,
+  deleteItem,
+  handleRequest,
+} from "../../utils/api.js";
+import ClothesSection from "../ClothesSection/ClothesSection.jsx";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -35,6 +41,30 @@ function App() {
 
   const closeActiveModal = () => {
     setActiveModal("");
+  };
+
+  const handleAddItemSubmit = (item) => {
+    addItem(item)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Failed to add new item:", err);
+      });
+  };
+
+  const handleDeleteItem = (id) => {
+    deleteItem(id)
+      .then(() => {
+        setClothingItems((preItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+        closeActiveModal();
+      })
+      .catch((error) => {
+        console.error("Failed to delete item:", error);
+      });
   };
 
   const handleToggleSwitchChange = () => {
@@ -65,7 +95,7 @@ function App() {
   return (
     <div className="page">
       <CurrentTemperatureUnitContext.Provider
-        value={(currentTemperatureUnit, handleToggleSwitchChange)}
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
@@ -99,11 +129,13 @@ function App() {
         <AddItemModal
           closeActiveModal={closeActiveModal}
           isOpen={activeModal === "add-garment"}
+          handleAddItemSubmit={handleAddItemSubmit}
         />
         <ItemModal
           isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
+          handleDeleteItem={handleDeleteItem}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>
