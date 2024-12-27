@@ -36,7 +36,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
       alert("Please select a weather type!");
       return;
     }
-    onSubmit({ name, imageUrl, weather });
+    onSubmit({ name, imageUrl: link, weather });
   };
 
   return (
