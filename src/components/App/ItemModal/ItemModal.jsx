@@ -1,8 +1,7 @@
 import "./ItemModal.css";
 import React from "react";
-import { deleteItem } from "../../../utils/api";
 
-function ItemModal({ isOpen, onClose, onDelete, card }) {
+function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
   if (!isOpen) return null;
 
   const handleDelete = () => {
@@ -11,7 +10,7 @@ function ItemModal({ isOpen, onClose, onDelete, card }) {
       return;
     }
 
-    deleteItem(card);
+    handleDeleteItem(card.id);
   };
   return (
     <div className={`modal ${isOpen && "modal_opened"}`}>
@@ -24,9 +23,9 @@ function ItemModal({ isOpen, onClose, onDelete, card }) {
 
         <img src={card.imageUrl} alt="Modal Image" className="modal__image" />
         <div className="modal__footer">
-          <p className="modal__caption">{card.name}</p>
-          <p className="modal__weather">Weather: {card.weather}</p>
-          <button className="modal__delete-button" onClick={handleDelete}>
+          <p className="modal__footer-caption">{card.name}</p>
+          <p className="modal__footer-weather">Weather: {card.weather}</p>
+          <button className="modal__footer-delete" onClick={handleDelete}>
             Delete Card
           </button>
         </div>
