@@ -57,7 +57,7 @@ function App() {
   const handleDeleteItem = (id) => {
     deleteItem(id)
       .then(() => {
-        setClothingItems((preItems) =>
+        setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== id)
         );
         closeActiveModal();

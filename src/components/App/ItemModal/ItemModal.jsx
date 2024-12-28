@@ -5,7 +5,7 @@ function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
   if (!isOpen) return null;
 
   const handleDelete = () => {
-    if (!card || !card._id) {
+    if (!card) {
       console.error("Item is missing _id", card);
       return;
     }
