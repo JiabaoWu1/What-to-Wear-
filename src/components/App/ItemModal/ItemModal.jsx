@@ -10,7 +10,7 @@ function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
       return;
     }
 
-    handleDeleteItem(card.id);
+    handleDeleteItem(card._id);
   };
   return (
     <div className={`modal ${isOpen && "modal_opened"}`}>
