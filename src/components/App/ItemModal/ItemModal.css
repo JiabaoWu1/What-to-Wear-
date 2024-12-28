@@ -30,3 +30,20 @@
 .modal__weather {
   margin: 12px 0 0;
 }
+
+.modal__delete-button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: right;
+  color: red;
+  position: relative;
+  left: 350px;
+  bottom: 33px;
+}
+
+.modal__delete-button:hover {
+  text-decoration: underline;
+}
