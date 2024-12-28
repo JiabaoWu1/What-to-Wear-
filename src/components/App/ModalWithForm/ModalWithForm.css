@@ -42,6 +42,7 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
+  margin-top: 24px;
 }
 
 .modal__close {
@@ -58,6 +59,7 @@
   background-position: center;
   background-size: contain;
   border: none;
+  cursor: pointer;
 }
 
 .modal__form {
@@ -68,7 +70,8 @@
 
 .modal__input {
   display: block;
-  padding: 8px 0;
+  padding: 0;
+  padding-top: 8px;
   margin-bottom: 24px;
   border: none;
   border-bottom: 1px solid #000;
@@ -113,4 +116,9 @@
   padding: 8px 13px;
   align-self: flex-start;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
+  margin-top: 24px;
+  width: 125px;
+  height: 36px;
 }

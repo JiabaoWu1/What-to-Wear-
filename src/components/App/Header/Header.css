@@ -15,6 +15,7 @@
 
 .header__add-clothes-btn {
   margin: 0 20px 0;
+  cursor: pointer;
 }
 
 .header__user-container {
