@@ -5,8 +5,9 @@
   display: block;
   margin: 0;
   margin-bottom: 8px;
+  color: grey;
 }
 
 .modal__label_type_radio:has(:checked) {
-  color: black;
+  color: rgba(0, 0, 0, 1);
 }

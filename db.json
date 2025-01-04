@@ -1,12 +1,6 @@
 {
   "items": [
     {
-      "_id": 2,
-      "name": "Cap",
-      "weather": "hot",
-      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591"
-    },
-    {
       "_id": 4,
       "name": "Dress",
       "weather": "hot",
@@ -85,10 +79,16 @@
       "_id": 17
     },
     {
-      "name": "Boots",
-      "imageUrl": "https://images.unsplash.com/photo-1482993032093-397e0c525e85?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "weather": "cold",
+      "name": "",
+      "imageUrl": "",
+      "weather": "hot",
       "_id": 18
+    },
+    {
+      "name": "",
+      "imageUrl": "",
+      "weather": "warm",
+      "_id": 19
     }
   ]
 }

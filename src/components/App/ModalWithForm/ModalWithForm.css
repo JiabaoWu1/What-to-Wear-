@@ -122,3 +122,7 @@
   width: 125px;
   height: 36px;
 }
+
+.modal__submit:hover {
+  color: #000;
+}
