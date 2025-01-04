@@ -6,3 +6,7 @@
   margin: 0;
   margin-bottom: 8px;
 }
+
+.modal__label_type_radio:has(:checked) {
+  color: black;
+}
