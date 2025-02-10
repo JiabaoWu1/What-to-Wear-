@@ -1,0 +1,9 @@
+.password__text {
+  font-size: 16px;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+}
+.password__modal_mod {
+  color: #ff4d00;
+}
