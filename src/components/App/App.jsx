@@ -17,6 +17,10 @@ import {
   handleRequest,
 } from "../../utils/api.js";
 import ClothesSection from "../ClothesSection/ClothesSection.jsx";
+import RegistrationModal from "../RegistrationModal/RegistrationModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
+import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -42,6 +46,21 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
   };
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
 
   const handleAddItemSubmit = (item) => {
     addItem(item)
@@ -65,6 +84,120 @@ function App() {
       .catch((error) => {
         console.error("Failed to delete item:", error);
       });
+  };
+
+  const handleRegistrationClick = () => {
+    setActiveModal("registration");
+  };
+
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
+  const handleEditProfileClick = () => {
+    setActiveModal("editprofile");
+  };
+
+  const handleSetClothingItems = () => {
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(console.error);
+  };
+
+  const handleSetWeather = () => {
+    getWeather(coordinates, APIKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("userData");
+
+    setIsLoggedIn(false);
+    setUserData(null);
+  };
+  const handleDeleteCard = () => {
+    const cardId = selectedCard._id;
+    deleteItem(cardId)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== cardId)
+        );
+        setSelectCard({});
+        closeActiveModal();
+        handleUpdateDOM(!updateDOM);
+      })
+      .catch(console.error);
+  };
+
+  const handleCardLike = (id, isLiked) => {
+    const token = localStorage.getItem("jwt");
+
+    if (!token) {
+      console.log("User is not authenticated.");
+      return;
+    }
+    if (!isLiked) {
+      addCardLike(id, token)
+        .then(() => {
+          console.log(userData.userId);
+          setClothingItems((cards) =>
+            cards.map((item) =>
+              item._id === id
+                ? { ...item, likes: [...item.likes, userData.userId] }
+                : item
+            )
+          );
+        })
+        .catch((err) => console.log("Error adding like:", err));
+    } else {
+      removeCardLike(id, token)
+        .then(() => {
+          setClothingItems((cards) =>
+            cards.map((item) =>
+              item._id === id
+                ? {
+                    ...item,
+                    likes: item.likes.filter((id) => id !== userData.userId),
+                  }
+                : item
+            )
+          );
+        })
+        .catch((err) => console.log("Error removing like:", err));
+    }
+  };
+
+  const handleLoginResponseInfo = () => {
+    setIsLoggedIn(true);
+    updateContext();
+  };
+
+  const updateUserInfo = (values) => {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+    userData.userName = values.name;
+    userData.userAvatar = values.urlText;
+    localStorage.setItem("userData", JSON.stringify(userData));
+  };
+
+  const updateContext = () => {
+    const token = localStorage.getItem("jwt");
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+
+    if (token && storedUserData) {
+      setIsLoggedIn(true);
+      setUserData(storedUserData);
+    } else {
+      setIsLoggedIn(false);
+      setUserData(null);
+    }
   };
 
   const handleToggleSwitchChange = () => {
@@ -92,6 +225,30 @@ function App() {
       });
   }, []);
 
+  const handleUpdateProfileInfo = (values) => {
+    handleUpdateProfileInfo(values)
+      .then(() => {
+        updateUserInfo(values);
+        updateContext();
+      })
+      .then(() => {
+        closeActiveModal();
+      })
+      .catch((error) => {
+        console.error("Profile update failed:", error);
+      });
+  };
+  useEffect(() => {
+    handleSetClothingItems();
+    handleSetWeather();
+    updateContext();
+    handleUpdateDOM(!updateDOM);
+  }, []);
+
+  useEffect(() => {
+    handleUpdateDOM(!updateDOM);
+  }, [weatherData]);
+
   return (
     <div className="page">
       <CurrentTemperatureUnitContext.Provider
@@ -104,9 +261,10 @@ function App() {
               path="/"
               element={
                 <Main
-                  weatherData={weatherData}
+                  onCardLike={handleCardLike}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  weatherData={weatherData}
                 />
               }
             />
@@ -114,8 +272,12 @@ function App() {
               path="/profile"
               element={
                 <Profile
+                  onCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
                   handleCardClick={handleCardClick}
+                  onLogout={handleLogout}
+                  onEditProfileClick={handleEditProfileClick}
+                  onCardLike={handleCardLike}
                   clothingItems={clothingItems}
                   userName={userName}
                 />
@@ -137,75 +299,36 @@ function App() {
           onClose={closeActiveModal}
           handleDeleteItem={handleDeleteItem}
         />
+        <DeleteModal
+          onCloseClick={closeActiveModal}
+          isOpened={activeModal === "delete" && "modal_opened"}
+          onDeleteCard={handleDeleteCard}
+        />
+        <RegistrationModal
+          onSignUpUser={handleSignupUser}
+          onCloseClick={closeActiveModal}
+          isOpened={activeModal === "registration" && "modal_opened"}
+          onLoginClick={handleLoginClick}
+          onLoginUser={handleLoginUser}
+          onLoginResponseInfo={handleLoginResponseInfo}
+          onIsPasswordValid={setIsPasswordValid}
+        />
+        <LoginModal
+          onCloseClick={closeActiveModal}
+          onLoginUser={handleLoginUser}
+          isOpened={activeModal === "login" && "modal_opened"}
+          onRegistrationClick={handleRegistrationClick}
+          onLoginResponseInfo={handleLoginResponseInfo}
+          onIsPasswordValid={setIsPasswordValid}
+        />
+        <EditProfileModal
+          onCloseClick={closeActiveModal}
+          isOpened={activeModal === "editprofile" && "modal_opened"}
+          onUpdateProfileInfo={handleUpdateProfileInfo}
+        />
       </CurrentTemperatureUnitContext.Provider>
     </div>
   );
 }
 
 export default App;
-
-/* <ModalWithForm
-          title="New Garment"
-          buttonText="Add garment"
-          isOpen={activeModal === "add-garment"}
-          onClose={closeActiveModal}
-        >
-          {" "}
-          <label htmlFor="name" className="modal__label">
-            Name{" "}
-            <input
-              type="text"
-              className="modal__input"
-              id="name"
-              placeholder="Name"
-            />
-          </label>
-          <label htmlFor="imageURL" className="modal__label">
-            Image{" "}
-            <input
-              type="url"
-              className="modal__input modal__url"
-              id="imageURL"
-              placeholder="ImageURL"
-            />
-          </label>
-          <fieldset className="modal__fieldset">
-            <legend className="modal__legend">Select the weather type:</legend>
-            <label
-              htmlFor="hot"
-              className="modal__label modal__label_type_radio"
-            >
-              <input
-                id="hot"
-                type="radio"
-                name="radio"
-                className="modal__radio-input"
-              />{" "}
-              Hot
-            </label>
-            <label
-              htmlFor="warm"
-              className="modal__label modal__label_type_radio"
-            >
-              <input
-                id="warm"
-                type="radio"
-                name="radio"
-                className="modal__radio-input"
-              />
-              Warm
-            </label>
-            <label
-              htmlFor="cold"
-              className="modal__label modal__label_type_radio"
-            >
-              <input
-                id="cold"
-                type="radio"
-                name="radio"
-                className="modal__radio-input"
-              />
-              Cold
-            </label>
-          </fieldset>
-        </ModalWithForm> */
