@@ -107,7 +107,7 @@ function App() {
   };
 
   const handleSetWeather = () => {
-    getWeather(coordinates, APIKey)
+    getWeather(coordinates, APIkey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
 
@@ -130,7 +130,7 @@ function App() {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== cardId)
         );
-        setSelectCard({});
+        setSelectedCard({});
         closeActiveModal();
         handleUpdateDOM(!updateDOM);
       })
@@ -139,7 +139,7 @@ function App() {
 
   const handleCardLike = (id, isLiked) => {
     const token = localStorage.getItem("jwt");
-
+    const { userData } = useContext(CurrentUserContext);
     if (!token) {
       console.log("User is not authenticated.");
       return;
@@ -226,17 +226,18 @@ function App() {
   }, []);
 
   const handleUpdateProfileInfo = (values) => {
-    handleUpdateProfileInfo(values)
-      .then(() => {
-        updateUserInfo(values);
-        updateContext();
-      })
-      .then(() => {
-        closeActiveModal();
-      })
-      .catch((error) => {
-        console.error("Profile update failed:", error);
-      });
+    return fetch("/api/updateProfile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(new Error("Failed to update profile"));
+      }
+      return res.json();
+    });
   };
   useEffect(() => {
     handleSetClothingItems();

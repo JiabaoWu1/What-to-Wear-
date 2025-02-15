@@ -6,7 +6,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { useFormAndValidation } from "../../Hooks/UseFormAndValidation.js";
 
-export default function LoginModal({
+function LoginModal({
   onCloseClick,
   onLoginUser,
   isOpened,
@@ -94,3 +94,5 @@ export default function LoginModal({
     </ModalWithForm>
   );
 }
+
+export default LoginModal;

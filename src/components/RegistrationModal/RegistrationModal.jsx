@@ -9,7 +9,7 @@ import {
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 
-export default function RegistrationModal({
+function RegistrationModal({
   onSignUpUser,
   onCloseClick,
   isOpened,
@@ -220,3 +220,5 @@ export default function RegistrationModal({
     </ModalWithForm>
   );
 }
+
+export default RegistrationModal;

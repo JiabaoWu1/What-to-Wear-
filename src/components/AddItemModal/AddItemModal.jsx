@@ -4,48 +4,54 @@ import "./AddItemModal.css";
 
 function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
   const [name, setName] = useState("");
+  const [link, setUrl] = useState("");
+  const [weather, setWeather] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleNameChange = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
   };
 
-  const [link, setUrl] = useState("");
   const handleUrlChange = (e) => {
-    console.log(e.target.value);
     setUrl(e.target.value);
   };
 
-  const [weather, setWeather] = useState("");
   const handleButtonChange = (e) => {
-    console.log(e.target.value);
     setWeather(e.target.value);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!weather) {
-  //     alert("Please select a weather type!");
-  //     return;
-  //   }
-  //   onAddItem({ name, link, weather });
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!weather) {
-      alert("Please select a weather type!");
+
+    if (!name || !link || !weather) {
+      alert("Please fill out all fields and select a weather type!");
       return;
     }
-    onSubmit({ name, imageUrl: link, weather });
+
+    setIsSubmitting(true); // Disable submit button
+    onSubmit({ name, imageUrl: link, weather })
+      .then(() => {
+        setName("");
+        setUrl("");
+        setWeather("");
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Submission error:", err);
+      })
+      .finally(() => {
+        setIsSubmitting(false); // Re-enable submit button
+      });
   };
 
   return (
     <ModalWithForm
       title="New Garment"
-      buttonText="Add Garment"
+      buttonText={isSubmitting ? "Adding..." : "Add Garment"}
       isOpen={isOpen}
       onClose={closeActiveModal}
       onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitting}
     >
       <label htmlFor="name" className="modal__label">
         Name{" "}
@@ -56,6 +62,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
           placeholder="Name"
           value={name}
           onChange={handleNameChange}
+          required
         />
       </label>
       <label htmlFor="imageUrl" className="modal__label">
@@ -67,6 +74,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
           placeholder="Image Url"
           value={link}
           onChange={handleUrlChange}
+          required
         />
       </label>
       <fieldset className="modal__radio-buttons">
@@ -79,6 +87,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
             type="radio"
             className="modal__radio_button_input"
             onChange={handleButtonChange}
+            required
           />{" "}
           Hot
         </label>
@@ -90,6 +99,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
             type="radio"
             className="modal__radio_button_input"
             onChange={handleButtonChange}
+            required
           />{" "}
           Warm
         </label>
@@ -101,6 +111,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
             type="radio"
             className="modal__radio_button_input"
             onChange={handleButtonChange}
+            required
           />{" "}
           Cold
         </label>
