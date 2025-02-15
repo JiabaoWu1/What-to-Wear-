@@ -2,12 +2,13 @@ import "./DeleteModal.css";
 
 function DeleteModal({ onCloseClick, isOpened, onDeleteCard }) {
   return (
-    <div className={`modal ${isOpened}`}>
+    <div className={`modal ${isOpened ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content-delete">
         <button
           onClick={onCloseClick}
           type="button"
           className="modal__delete-close"
+          aria-label="Close delete modal"
         ></button>
         <div className="modal__delete-text-panel">
           <p className="modal__delete-text">

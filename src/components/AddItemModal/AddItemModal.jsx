@@ -1,24 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ModalWithForm from "../App/ModalWithForm/ModalWithForm";
 import "./AddItemModal.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Import context
 
 function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
+  const { _id: currentUserId } = useContext(CurrentUserContext); // Get current user ID
   const [name, setName] = useState("");
   const [link, setUrl] = useState("");
   const [weather, setWeather] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleUrlChange = (e) => {
-    setUrl(e.target.value);
-  };
-
-  const handleButtonChange = (e) => {
-    setWeather(e.target.value);
-  };
+  const handleNameChange = (e) => setName(e.target.value);
+  const handleUrlChange = (e) => setUrl(e.target.value);
+  const handleButtonChange = (e) => setWeather(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,8 +22,9 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
       return;
     }
 
-    setIsSubmitting(true); // Disable submit button
-    onSubmit({ name, imageUrl: link, weather })
+    setIsSubmitting(true);
+
+    onSubmit({ name, imageUrl: link, weather, owner: currentUserId }) // Attach owner ID
       .then(() => {
         setName("");
         setUrl("");
@@ -40,7 +35,7 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
         console.error("Submission error:", err);
       })
       .finally(() => {
-        setIsSubmitting(false); // Re-enable submit button
+        setIsSubmitting(false);
       });
   };
 
@@ -79,42 +74,24 @@ function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
       </label>
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
-        <label htmlFor="hot" className="modal__label modal__label_type_radio">
-          <input
-            id="hot"
-            value="hot"
-            name="weather"
-            type="radio"
-            className="modal__radio_button_input"
-            onChange={handleButtonChange}
-            required
-          />{" "}
-          Hot
-        </label>
-        <label htmlFor="warm" className="modal__label modal__label_type_radio">
-          <input
-            id="warm"
-            value="warm"
-            name="weather"
-            type="radio"
-            className="modal__radio_button_input"
-            onChange={handleButtonChange}
-            required
-          />{" "}
-          Warm
-        </label>
-        <label htmlFor="cold" className="modal__label modal__label_type_radio">
-          <input
-            id="cold"
-            value="cold"
-            name="weather"
-            type="radio"
-            className="modal__radio_button_input"
-            onChange={handleButtonChange}
-            required
-          />{" "}
-          Cold
-        </label>
+        {["hot", "warm", "cold"].map((type) => (
+          <label
+            key={type}
+            htmlFor={type}
+            className="modal__label modal__label_type_radio"
+          >
+            <input
+              id={type}
+              value={type}
+              name="weather"
+              type="radio"
+              className="modal__radio_button_input"
+              onChange={handleButtonChange}
+              required
+            />{" "}
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </label>
+        ))}
       </fieldset>
     </ModalWithForm>
   );

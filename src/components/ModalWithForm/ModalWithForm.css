@@ -1,0 +1,93 @@
+/* Modal Overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Opened Modal */
+.modal_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Modal Content Box */
+.modal__content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Close Button */
+.modal__close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Modal Title */
+.modal__title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Form Styles */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Submit Button */
+.modal__submit-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.modal__submit-button_disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Secondary Button (e.g., for Sign Up) */
+.modal__secondary-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal__secondary-button:hover {
+  text-decoration: underline;
+}

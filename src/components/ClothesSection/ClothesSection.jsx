@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import "./ClothesSection.css";
 import ItemCard from "../App/ItemCard/ItemCard";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Import context
 
 function ClothesSection({
   handleCardClick,
@@ -7,7 +9,12 @@ function ClothesSection({
   handleAddClick,
   onCardLike,
 }) {
-  const profileCards = clothingItems;
+  const currentUser = useContext(CurrentUserContext); // Get current user
+
+  // Filter items to only show those added by the current user
+  const profileCards = clothingItems.filter(
+    (item) => item.owner === currentUser._id
+  );
 
   return (
     <div className="clothes-section">
@@ -18,16 +25,14 @@ function ClothesSection({
         </button>
       </div>
       <ul className="clothes-section__items">
-        {profileCards.map((item) => {
-          return (
-            <ItemCard
-              key={item._id}
-              item={item}
-              onCardClick={handleCardClick}
-              onCardLike={onCardLike}
-            />
-          );
-        })}
+        {profileCards.map((item) => (
+          <ItemCard
+            key={item._id}
+            item={item}
+            onCardClick={handleCardClick}
+            onCardLike={onCardLike}
+          />
+        ))}
       </ul>
     </div>
   );

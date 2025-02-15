@@ -1,13 +1,12 @@
-import "RegirstrationModal.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import {
   validateName,
   validateEmail,
   validatePassword,
   validateUrl,
 } from "../../utils/validation.jsx";
-
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
+import "./RegistrationModal.css";
 
 function RegistrationModal({
   onSignUpUser,
@@ -25,15 +24,9 @@ function RegistrationModal({
     avatar: "",
   };
 
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-    name: "",
-    avatar: "",
-  });
-
+  const [values, setValues] = useState(initialValues);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitVisible, setIsSubmitVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [emailVisibility, setEmailVisibility] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState("");
@@ -44,13 +37,13 @@ function RegistrationModal({
     "Please enter your email"
   );
   const [validationPasswordMessage, setValidationPasswordMessage] = useState(
-    "Please enter you password"
+    "Please enter your password"
   );
   const [validationNameMessage, setValidationNameMessage] = useState(
-    "Please enter in your preferred name"
+    "Please enter your preferred name"
   );
   const [validationUrlMessage, setValidationUrlMessage] = useState(
-    "Please enter in a valid URL for your Avatar image"
+    "Please enter a valid URL for your Avatar image"
   );
 
   const isSecondButtonVisible = true;
@@ -75,26 +68,6 @@ function RegistrationModal({
     const checkValidName = validateName(values.name);
     const checkValidUrl = validateUrl(values.avatar);
 
-    if (values.email !== initialValues.email) {
-      setEmailVisibility(checkValidEmail.isValid ? "isHidden" : "");
-      setValidationEmailMessage(checkValidEmail.message);
-    }
-
-    if (values.password !== initialValues.password) {
-      setPasswordVisibility(checkValidPassword.isValid ? "isHidden" : "");
-      setValidationPasswordMessage(checkValidPassword.message);
-    }
-
-    if (values.name !== initialValues.name) {
-      setNameVisibility(checkValidName.isValid ? "isHidden" : "");
-      setValidationNameMessage(checkValidName.message);
-    }
-
-    if (values.avatar !== initialValues.avatar) {
-      setUrlVisibility(checkValidUrl.isValid ? "isHidden" : "");
-      setValidationUrlMessage(checkValidUrl.message);
-    }
-
     setEmailVisibility(checkValidEmail.isValid ? "isHidden" : "");
     setPasswordVisibility(checkValidPassword.isValid ? "isHidden" : "");
     setNameVisibility(checkValidName.isValid ? "isHidden" : "");
@@ -105,36 +78,34 @@ function RegistrationModal({
     setValidationNameMessage(checkValidName.message);
     setValidationUrlMessage(checkValidUrl.message);
 
-    if (
+    setIsSubmitVisible(
       checkValidEmail.isValid &&
-      checkValidPassword.isValid &&
-      checkValidName.isValid
-    ) {
-      setIsSubmitVisible(true);
-    }
+        checkValidPassword.isValid &&
+        checkValidName.isValid &&
+        checkValidUrl.isValid
+    );
   }, [values]);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setIsSubmitting(true);
 
-    onSignUpUser(values)
-      .then(() => {
-        const userEmail = values.email;
-        const userPassword = values.password;
+    try {
+      await onSignUpUser(values);
+      const userEmail = values.email;
+      const userPassword = values.password;
 
-        onLoginUser({ email: userEmail, password: userPassword })
-          .then(() => {
-            onLoginResponseInfo();
-            handleReset();
-            onCloseClick();
-            onIsPasswordValid(true);
-          })
-          .catch((error) => {
-            setErrorMessage("Login failed", error);
-            onIsPasswordValid(false);
-          });
-      })
-      .catch((error) => console.error("Registration failed", error));
+      await onLoginUser({ email: userEmail, password: userPassword });
+      onLoginResponseInfo();
+      handleReset();
+      onCloseClick();
+      onIsPasswordValid(true);
+    } catch (error) {
+      setErrorMessage("Registration or login failed. Please try again.");
+      onIsPasswordValid(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleOpenSignin = () => {
@@ -144,7 +115,7 @@ function RegistrationModal({
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText="Sign Up"
+      buttonText={isSubmitting ? "Signing Up..." : "Sign Up"}
       isSecondButtonVisible={isSecondButtonVisible}
       buttonText2="Log In"
       onCloseClick={onCloseClick}
@@ -152,6 +123,7 @@ function RegistrationModal({
       onSubmit={handleSubmit}
       isOpened={isOpened}
       onOpenSignup={handleOpenSignin}
+      isSubmitDisabled={isSubmitting}
     >
       <label htmlFor="emailRegistration" className="modal__label">
         Email*
@@ -161,7 +133,7 @@ function RegistrationModal({
           className="modal__input modal__input_email"
           id="emailRegistration"
           placeholder="Email"
-          value={values.email || ""}
+          value={values.email}
           onChange={handleChange}
           required
         />
@@ -177,7 +149,7 @@ function RegistrationModal({
           className="modal__input modal__input_image"
           id="passwordRegistration"
           placeholder="Password"
-          value={values.password || ""}
+          value={values.password}
           onChange={handleChange}
           required
         />
@@ -193,7 +165,7 @@ function RegistrationModal({
           className="modal__input modal__input_name"
           id="nameRegistration"
           placeholder="Name"
-          value={values.name || ""}
+          value={values.name}
           onChange={handleChange}
           required
         />
@@ -209,8 +181,9 @@ function RegistrationModal({
           className="modal__input modal__input_image"
           id="imageUrlRegistration"
           placeholder="Avatar URL"
-          value={values.avatar || ""}
+          value={values.avatar}
           onChange={handleChange}
+          required
         />
         <p className={`validation__url-message ${urlVisibility}`}>
           {validationUrlMessage}

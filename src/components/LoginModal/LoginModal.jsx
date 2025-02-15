@@ -1,8 +1,6 @@
 import "./LoginModal.css";
-
 import { useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
-
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { useFormAndValidation } from "../../Hooks/UseFormAndValidation.js";
 
@@ -20,29 +18,26 @@ function LoginModal({
   };
 
   const { isPasswordValid } = useContext(CurrentUserContext);
-
   const passwordValidClass = !isPasswordValid ? "password__modal_mod" : "";
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation(initialValues);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
-    onLoginUser(values)
-      .then(() => {
-        onLoginResponseInfo();
-        resetForm();
-        onCloseClick();
-        onIsPasswordValid(true);
-      })
-      .catch(() => {
-        onIsPasswordValid(false);
-      });
+    try {
+      await onLoginUser(values);
+      onLoginResponseInfo();
+      resetForm();
+      onCloseClick();
+      onIsPasswordValid(true);
+    } catch (err) {
+      console.error("Login failed:", err);
+      onIsPasswordValid(false);
+    }
   };
-  const handleOpenSignup = () => {
-    onRegistrationClick();
-  };
+
   return (
     <ModalWithForm
       title="Log In"
@@ -52,9 +47,10 @@ function LoginModal({
       onSubmit={handleSubmit}
       isSecondButtonVisible={true}
       isOpened={isOpened}
-      isSubmitVisible={isValid}
-      onOpenSignup={handleOpenSignup}
+      isSubmitVisible={isValid} // Ensures button is disabled if form is invalid
+      onOpenSignup={onRegistrationClick}
     >
+      {/* Email Input */}
       <label htmlFor="emailLogin" className="modal__label">
         Email
         <input
@@ -67,29 +63,29 @@ function LoginModal({
           onChange={handleChange}
           required
         />
-        <p className={`validation__email-message`}>{errors?.email}</p>
+        {errors.email && (
+          <p className="validation__email-message">{errors.email}</p>
+        )}
       </label>
 
-      <label htmlFor="password" className={`modal__label `}>
-        {isPasswordValid ? (
-          <p className="password__text">Password</p>
-        ) : (
-          <p className={`password__text ${passwordValidClass}`}>
-            Incorrect password
-          </p>
-        )}
+      {/* Password Input */}
+      <label htmlFor="password" className="modal__label">
+        <p className={`password__text ${passwordValidClass}`}>
+          {isPasswordValid ? "Password" : "Incorrect password"}
+        </p>
         <input
           name="password"
           type="password"
-          className={`modal__input 
-          ${passwordValidClass}`}
+          className={`modal__input ${passwordValidClass}`}
           id="password"
           placeholder="Password"
           value={values.password || ""}
           onChange={handleChange}
           required
         />
-        <p className={`validation__password-message`}>{errors?.password}</p>
+        {errors.password && (
+          <p className="validation__password-message">{errors.password}</p>
+        )}
       </label>
     </ModalWithForm>
   );
