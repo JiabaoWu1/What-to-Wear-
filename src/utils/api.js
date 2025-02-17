@@ -8,7 +8,12 @@ const handleRequest = (res) => {
 const getItems = () => {
   return fetch(`${baseUrl}/items`, {
     headers,
-  }).then(handleRequest);
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Error fetching items:", error);
+      return Promise.reject(error);
+    });
 };
 
 const addItem = (item) => {
@@ -16,116 +21,130 @@ const addItem = (item) => {
     method: "POST",
     headers,
     body: JSON.stringify(item),
-  }).then(handleRequest);
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Error adding item:", error);
+      return Promise.reject(error);
+    });
 };
 
 const deleteItem = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers,
-  }).then(handleRequest);
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Error deleting item:", error);
+      return Promise.reject(error);
+    });
 };
 
 export async function handleLoginUser(userData) {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(userData),
   })
-    .then((res) => {
-      return responseCheck(res);
-    })
+    .then(handleRequest)
     .then((data) => {
       console.log("Login successful");
 
       if (data.token) {
         localStorage.setItem("jwt", data.token);
         localStorage.setItem("userData", JSON.stringify(data.userInfo));
+        return data;
       } else {
         console.error("No token received in response.");
         return Promise.reject(new Error("No token received."));
       }
     })
     .catch((error) => {
-      console.error(error);
-      return Promise.reject(`Error: ${error.message}`);
+      console.error("Login error:", error);
+      return Promise.reject(error);
     });
 }
 
 export async function handleSignupUser(userData) {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(userData),
   })
-    .then((res) => {
-      return responseCheck(res);
-    })
+    .then(handleRequest)
     .catch((error) => {
-      console.error(error);
-      return Promise.reject(`Error: ${error.message}`);
+      console.error("Signup error:", error);
+      return Promise.reject(error);
     });
 }
 
 export async function handleUpdateProfile(userData) {
   const token = localStorage.getItem("jwt");
 
-  fetch(`${baseUrl}/profile`, {
+  if (!token) {
+    console.error("No token found.");
+    return Promise.reject("No token available.");
+  }
+
+  return fetch(`${baseUrl}/profile`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(userData),
   })
-    .then((res) => {
-      return responseCheck(res);
-    })
+    .then(handleRequest)
     .then(() => {
       console.log("Updated profile successfully.");
     })
     .catch((error) => {
-      console.error(error);
-      return Promise.reject(`Error: ${error.message}`);
-    });
-}
-export async function addCardLike(id, token) {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      return responseCheck(res);
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.error(error);
-      return Promise.reject(`Error: ${error.message}`);
+      console.error("Profile update error:", error);
+      return Promise.reject(error);
     });
 }
 
-export function removeCardLike(id, token) {
+export async function addCardLike(id) {
+  const token = localStorage.getItem("jwt");
+
+  if (!token) {
+    console.error("No token found.");
+    return Promise.reject("No token available.");
+  }
+
+  return fetch(`${baseUrl}/items/${id}/likes`, {
+    method: "PUT",
+    headers: {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Error adding like:", error);
+      return Promise.reject(error);
+    });
+}
+
+export function removeCardLike(id) {
+  const token = localStorage.getItem("jwt");
+
+  if (!token) {
+    console.error("No token found.");
+    return Promise.reject("No token available.");
+  }
+
   return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => {
-      return responseCheck(res);
-    })
+    .then(handleRequest)
     .catch((error) => {
-      console.error(error);
-      return Promise.reject(`Error: ${error.message}`);
+      console.error("Error removing like:", error);
+      return Promise.reject(error);
     });
 }
 

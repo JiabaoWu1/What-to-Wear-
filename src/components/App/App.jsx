@@ -338,14 +338,7 @@ function App() {
             onLoginResponseInfo={handleLoginResponseInfo}
             onIsPasswordValid={setIsPasswordValid}
           />
-          <LoginModal
-            onCloseClick={closeActiveModal}
-            onLoginUser={handleLoginUser}
-            isOpened={activeModal === "login" ? "modal_opened" : ""}
-            onRegistrationClick={handleRegistrationClick}
-            onLoginResponseInfo={handleLoginResponseInfo}
-            onIsPasswordValid={setIsPasswordValid}
-          />
+
           <EditProfileModal
             onCloseClick={closeActiveModal}
             isOpened={activeModal === "editprofile" ? "modal_opened" : ""}

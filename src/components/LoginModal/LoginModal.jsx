@@ -17,11 +17,14 @@ export function LoginModal({
     password: "",
   };
 
-  const { isPasswordValid } = useContext(CurrentUserContext);
-  const passwordValidClass = !isPasswordValid ? "password__modal_mod" : "";
+  // const { isPasswordValid } = useContext(CurrentUserContext);
+  // const passwordValidClass = !isPasswordValid ? "password__modal_mod" : "";
 
   const { values, handleChange, errors, isValid, resetForm } =
     UseFormAndValidation(initialValues);
+
+  const isPasswordValid = errors.password === undefined;
+  const passwordValidClass = isPasswordValid ? "" : "password__modal_mod";
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
