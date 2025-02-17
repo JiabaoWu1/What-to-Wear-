@@ -10,19 +10,6 @@ const getItems = () => {
     headers,
   }).then(handleRequest);
 };
-export async function getItems() {
-  return fetch(`${baseUrl}/items`)
-    .then((res) => {
-      return responseCheck(res);
-    })
-    .catch((error) => {
-      console.error(error);
-      return {
-        link: AvatarImage,
-        message: "Network error or invalid URL, using fallback image.",
-      };
-    });
-}
 
 const addItem = (item) => {
   return fetch(`${baseUrl}/items`, {

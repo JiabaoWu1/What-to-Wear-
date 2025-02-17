@@ -2,9 +2,9 @@ import "./LoginModal.css";
 import { useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import { useFormAndValidation } from "../../Hooks/UseFormAndValidation.js";
+import { UseFormAndValidation } from "../Hooks/UseFormAndValidation.js";
 
-function LoginModal({
+export function LoginModal({
   onCloseClick,
   onLoginUser,
   isOpened,
@@ -21,7 +21,7 @@ function LoginModal({
   const passwordValidClass = !isPasswordValid ? "password__modal_mod" : "";
 
   const { values, handleChange, errors, isValid, resetForm } =
-    useFormAndValidation(initialValues);
+    UseFormAndValidation(initialValues);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -90,5 +90,3 @@ function LoginModal({
     </ModalWithForm>
   );
 }
-
-export default LoginModal;

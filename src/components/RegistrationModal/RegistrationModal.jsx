@@ -45,6 +45,7 @@ function RegistrationModal({
   const [validationUrlMessage, setValidationUrlMessage] = useState(
     "Please enter a valid URL for your Avatar image"
   );
+  const [isSubmitVisible, setIsSubmitVisible] = useState(false);
 
   const isSecondButtonVisible = true;
 

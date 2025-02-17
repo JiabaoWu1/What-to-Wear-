@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./ClothesSection.css";
 import ItemCard from "../App/ItemCard/ItemCard";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Import context
+import CurrentUserContext from "../../contexts/CurrentUserContext"; // Import context
 
 function ClothesSection({
   handleCardClick,
