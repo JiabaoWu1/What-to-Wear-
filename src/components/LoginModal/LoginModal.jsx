@@ -2,7 +2,7 @@ import "./LoginModal.css";
 import { useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import { UseFormAndValidation } from "../Hooks/UseFormAndValidation.js";
+import { UseFormAndValidation } from "../../hooks/UseFormAndValidation.js";
 
 export function LoginModal({
   onCloseClick,
