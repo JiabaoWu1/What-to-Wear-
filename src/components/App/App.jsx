@@ -125,7 +125,7 @@ function App() {
   const handleSetClothingItems = () => {
     getItems()
       .then((data) => {
-        setClothingItems(data);
+        setClothingItems(data.data);
       })
       .catch(console.error);
   };
