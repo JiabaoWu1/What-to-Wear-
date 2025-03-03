@@ -1,34 +1,37 @@
-import { baseUrl, attemptGainResponse } from "../utils/api.js";
+export const baseUrl = "http://localhost:3001";
+import { handleRequest } from "./api";
 
-export function signup(item) {
-  return fetch(`${baseUrl}/auth/signup`, {
+// /signin for user authorization
+function authorize(email, password) {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(item),
-  })
-    .then((res) => attemptGainResponse(res))
-    .catch((error) => {
-      // Handle network or unexpected errors
-      console.error("Signup error:", error);
-      throw error;
-    });
+    body: JSON.stringify({ email, password }),
+  }).then(handleRequest);
 }
 
-// Signin function with proper endpoint
-export function signin(item) {
-  return fetch(`${baseUrl}/auth/signin`, {
+// /signup for user registration
+function register(name, avatar, email, password) {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(item),
-  })
-    .then((res) => attemptGainResponse(res))
-    .catch((error) => {
-      // Handle network or unexpected errors
-      console.error("Signin error:", error);
-      throw error;
-    });
+    body: JSON.stringify({ name, avatar, email, password }),
+  }).then(handleRequest);
 }
+
+// for user to check the token
+function getUserInfo(token) {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(handleRequest);
+}
+
+export { authorize, register, getUserInfo };
