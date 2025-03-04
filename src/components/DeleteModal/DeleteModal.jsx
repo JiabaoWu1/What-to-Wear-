@@ -1,6 +1,21 @@
 import "./DeleteModal.css";
+import React, { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function DeleteModal({ onCloseClick, isOpened, onDeleteCard }) {
+function DeleteModal({ card, onCloseClick, isOpened, onDeleteCard }) {
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const isOwn = card.owner === currentUser?._id;
+  const itemConfirmDeleteClassname = `modal__button modal__button_confirm ${
+    isOwn ? "" : "modal__button_hidden"
+  }`;
+
+  const handleDeleteItem = () => {
+    onDeleteCard(card._id);
+  };
+
+  if (!isOpend) return null;
+
   return (
     <div className={`modal ${isOpened ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content-delete">
@@ -19,7 +34,7 @@ function DeleteModal({ onCloseClick, isOpened, onDeleteCard }) {
         <div className="modal__delete-button-panel">
           <button
             className="modal__delete-button modal__delete-button_yes"
-            onClick={onDeleteCard}
+            onClick={handleDeleteItem}
           >
             Yes, delete item
           </button>

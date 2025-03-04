@@ -2,33 +2,42 @@
   display: flex;
   align-items: center;
   padding: 32px 0 28px;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
 }
 
-.header__logo {
-  margin-right: 24px;
-}
-
-.header__date-and-location {
-  margin: 0;
-  margin-left: 24px;
-}
-
-.header__add-clothes-btn {
+.header__add-clothes-button,
+.header__signin-button,
+.header__register-button {
   margin: 0 20px 0;
   cursor: pointer;
+  border: none;
+  background-color: inherit;
 }
 
-.header__user-container {
+.header__user_container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
 .header__username {
   margin: 0;
 }
 
-.header__toggle {
-  display: flex;
-  align-items: center;
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.header__toggle-switch {
+  margin: auto 0 auto 20px;
+}
+
+.header__profile-link {
+  text-decoration: none;
+  color: inherit;
 }

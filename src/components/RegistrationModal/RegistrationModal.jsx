@@ -1,198 +1,115 @@
-import React, { useState, useEffect } from "react";
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
-import {
-  validateName,
-  validateEmail,
-  validatePassword,
-  validateUrl,
-} from "../../utils/validation.jsx";
-import "./RegistrationModal.css";
+import React, { useEffect, useState } from "react"; // import hooks useState and useEffect
+import ModalWithForm from "../ModalWithForm/ModalWithForm"; // reuse the ModalWithForm component
 
-function RegistrationModal({
-  onSignUpUser,
-  onCloseClick,
-  isOpened,
-  onLoginClick,
-  onLoginUser,
-  onLoginResponseInfo,
-  onIsPasswordValid,
-}) {
-  const initialValues = {
-    email: "",
-    password: "",
-    name: "",
-    avatar: "",
+// RegisterModal is the component for user registration with the necessary state variables
+const RegisterModal = ({
+  closeActiveModal,
+  onRegistration,
+  isRegisterOpen,
+  handleLoginClick,
+}) => {
+  const [email, setEmail] = useState(""); // Declare the email state variable
+  const [password, setPassword] = useState(""); // Declare the password state variable
+  const [name, setName] = useState(""); // Declare the name state variable
+  const [avatar, setAvatar] = useState(""); // Declare the avatar state variable
+
+  // input handlers
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+  const handleAvatarChange = (e) => {
+    setAvatar(e.target.value);
   };
 
-  const [values, setValues] = useState(initialValues);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [emailVisibility, setEmailVisibility] = useState("");
-  const [passwordVisibility, setPasswordVisibility] = useState("");
-  const [nameVisibility, setNameVisibility] = useState("");
-  const [urlVisibility, setUrlVisibility] = useState("");
-
-  const [validationEmailMessage, setValidationEmailMessage] = useState(
-    "Please enter your email"
-  );
-  const [validationPasswordMessage, setValidationPasswordMessage] = useState(
-    "Please enter your password"
-  );
-  const [validationNameMessage, setValidationNameMessage] = useState(
-    "Please enter your preferred name"
-  );
-  const [validationUrlMessage, setValidationUrlMessage] = useState(
-    "Please enter a valid URL for your Avatar image"
-  );
-  const [isSubmitVisible, setIsSubmitVisible] = useState(false);
-
-  const isSecondButtonVisible = true;
-
-  const handleReset = () => {
-    setValues(initialValues);
+  // handle form submit
+  const handleRegistration = (e) => {
+    e.preventDefault();
+    onRegistration({ email, password, name, avatar });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
+  // reset form values when modal opens
   useEffect(() => {
-    setErrorMessage("");
-
-    const checkValidEmail = validateEmail(values.email);
-    const checkValidPassword = validatePassword(values.password);
-    const checkValidName = validateName(values.name);
-    const checkValidUrl = validateUrl(values.avatar);
-
-    setEmailVisibility(checkValidEmail.isValid ? "isHidden" : "");
-    setPasswordVisibility(checkValidPassword.isValid ? "isHidden" : "");
-    setNameVisibility(checkValidName.isValid ? "isHidden" : "");
-    setUrlVisibility(checkValidUrl.isValid ? "isHidden" : "");
-
-    setValidationEmailMessage(checkValidEmail.message);
-    setValidationPasswordMessage(checkValidPassword.message);
-    setValidationNameMessage(checkValidName.message);
-    setValidationUrlMessage(checkValidUrl.message);
-
-    setIsSubmitVisible(
-      checkValidEmail.isValid &&
-        checkValidPassword.isValid &&
-        checkValidName.isValid &&
-        checkValidUrl.isValid
-    );
-  }, [values]);
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await onSignUpUser(values);
-      const userEmail = values.email;
-      const userPassword = values.password;
-
-      await onLoginUser({ email: userEmail, password: userPassword });
-      onLoginResponseInfo();
-      handleReset();
-      onCloseClick();
-      onIsPasswordValid(true);
-    } catch (error) {
-      setErrorMessage("Registration or login failed. Please try again.");
-      onIsPasswordValid(false);
-    } finally {
-      setIsSubmitting(false);
+    if (isRegisterOpen) {
+      setEmail("");
+      setPassword("");
+      setName("");
+      setAvatar("");
     }
-  };
-
-  const handleOpenSignin = () => {
-    onLoginClick();
-  };
+  }, [isRegisterOpen]); // run effect
 
   return (
     <ModalWithForm
-      title="Sign Up"
-      buttonText={isSubmitting ? "Signing Up..." : "Sign Up"}
-      isSecondButtonVisible={isSecondButtonVisible}
-      buttonText2="Log In"
-      onCloseClick={onCloseClick}
-      isSubmitVisible={isSubmitVisible}
-      onSubmit={handleSubmit}
-      isOpened={isOpened}
-      onOpenSignup={handleOpenSignin}
-      isSubmitDisabled={isSubmitting}
+      title="Sign up"
+      buttonText="Sign Up"
+      isOpen={isRegisterOpen}
+      onClose={closeActiveModal}
+      onSubmit={handleRegistration}
+      handleLoginClick={handleLoginClick}
     >
-      <label htmlFor="emailRegistration" className="modal__label">
-        Email*
+      <label className="modal__label">
+        Email{" "}
         <input
-          name="email"
           type="email"
-          className="modal__input modal__input_email"
-          id="emailRegistration"
+          id="register__email"
+          className="modal__input"
           placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
-          required
+          value={email}
+          onChange={handleEmailChange}
         />
-        <p className={`validation__email-message ${emailVisibility}`}>
-          {validationEmailMessage}
-        </p>
       </label>
-      <label htmlFor="passwordRegistration" className="modal__label">
-        Password*
+      <label className="modal__label">
+        Password{" "}
         <input
-          name="password"
           type="password"
-          className="modal__input modal__input_image"
-          id="passwordRegistration"
+          id="register__password"
+          className="modal__input"
           placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-          required
+          value={password}
+          onChange={handlePasswordChange}
         />
-        <p className={`validation__password-message ${passwordVisibility}`}>
-          {validationPasswordMessage}
-        </p>
       </label>
-      <label htmlFor="nameRegistration" className="modal__label">
-        Name*
+      <label className="modal__label">
+        Name{" "}
         <input
-          name="name"
           type="text"
-          className="modal__input modal__input_name"
-          id="nameRegistration"
+          id="register__name"
+          className="modal__input"
           placeholder="Name"
-          value={values.name}
-          onChange={handleChange}
-          required
+          value={name}
+          onChange={handleNameChange}
         />
-        <p className={`validation__name-message ${nameVisibility}`}>
-          {validationNameMessage}
-        </p>
       </label>
-      <label htmlFor="imageUrlRegistration" className="modal__label">
-        Avatar URL*
+      <label className="modal__label">
+        Avatar{" "}
         <input
-          name="avatar"
-          type="URL"
-          className="modal__input modal__input_image"
-          id="imageUrlRegistration"
+          type="url"
+          id="register__avatar"
+          className="modal__input"
           placeholder="Avatar URL"
-          value={values.avatar}
-          onChange={handleChange}
-          required
+          value={avatar}
+          onChange={handleAvatarChange}
         />
-        <p className={`validation__url-message ${urlVisibility}`}>
-          {validationUrlMessage}
-        </p>
       </label>
-      {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+      <div className="modal__submit-buttons">
+        <button type="submit" className="modal__submit">
+          Sign Up
+        </button>
+        <button
+          type="button"
+          className="modal__submit modal__submit-alt"
+          onClick={handleLoginClick}
+        >
+          or Log In
+        </button>
+      </div>
     </ModalWithForm>
   );
-}
+};
 
-export default RegistrationModal;
+export default RegisterModal;

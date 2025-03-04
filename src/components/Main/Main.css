@@ -6,3 +6,9 @@
   list-style-type: none;
   gap: 21px;
 }
+
+.cards__text {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24.8px;
+}

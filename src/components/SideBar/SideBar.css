@@ -1,15 +1,49 @@
 .sidebar {
   display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  font: 20px/24px "Cabinet Grotesk";
+  min-width: 229px;
+  max-width: 229px;
 }
 
 .sidebar__avatar {
   width: 56px;
   height: 56px;
-  padding-right: 16px;
+  border-radius: 50%;
 }
 
 .sidebar__username {
-  width: 157px;
-  margin: auto;
-  padding-right: 116px;
+  height: auto;
+  margin: 0;
+  padding: 16px 0 16px 16px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+}
+
+.sidebar__change-profile-button {
+  height: 25px;
+  margin-top: 24px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  font-family: "Cabinet Grotesk";
+}
+
+.sidebar__singout-button {
+  height: 25px;
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  font-family: "Cabinet Grotesk";
 }

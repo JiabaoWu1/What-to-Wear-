@@ -1,95 +1,81 @@
-import "./LoginModal.css";
-import { useContext } from "react";
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
-import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import { UseFormAndValidation } from "../../hooks/UseFormAndValidation.js";
+import { useState, useEffect } from "react";
+import ModalWithForm from "../ModalWithForm/ModalWithForm"; // reusing ModalWithForm component
 
-export function LoginModal({
-  onCloseClick,
-  onLoginUser,
-  isOpened,
-  onRegistrationClick,
-  onLoginResponseInfo,
-  onIsPasswordValid,
-}) {
-  const initialValues = {
-    email: "",
-    password: "",
+// LoginModal is the component for user authorization with the necessary state variables
+const LoginModal = ({
+  closeActiveModal,
+  onLogin,
+  isLoginOpen,
+  handleRegisterClick,
+}) => {
+  const [email, setEmail] = useState(""); // Declare the email state variable
+  const [password, setPassword] = useState(""); // Declare the password state variable
+
+  // input handlers
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  // handle form submit
+  const handleLogin = (e) => {
+    e.preventDefault();
+    onLogin({ email, password });
   };
 
-  // const { isPasswordValid } = useContext(CurrentUserContext);
-  // const passwordValidClass = !isPasswordValid ? "password__modal_mod" : "";
-
-  const { values, handleChange, errors, isValid, resetForm } =
-    UseFormAndValidation(initialValues);
-
-  const isPasswordValid = errors.password === undefined;
-  const passwordValidClass = isPasswordValid ? "" : "password__modal_mod";
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-
-    try {
-      await onLoginUser(values);
-      onLoginResponseInfo();
-      resetForm();
-      onCloseClick();
-      onIsPasswordValid(true);
-    } catch (err) {
-      console.error("Login failed:", err);
-      onIsPasswordValid(false);
+  // reset form values when modal opens
+  useEffect(() => {
+    if (isLoginOpen) {
+      setEmail("");
+      setPassword("");
     }
-  };
+  }, [isLoginOpen]); // run effect
 
   return (
     <ModalWithForm
-      title="Log In"
-      buttonText="Log In"
-      buttonText2="Sign Up"
-      onCloseClick={onCloseClick}
-      onSubmit={handleSubmit}
-      isSecondButtonVisible={true}
-      isOpened={isOpened}
-      isSubmitVisible={isValid} // Ensures button is disabled if form is invalid
-      onOpenSignup={onRegistrationClick}
+      title="Sign in"
+      buttonText="Log in"
+      isOpen={isLoginOpen}
+      onClose={closeActiveModal}
+      onSubmit={handleLogin}
     >
-      {/* Email Input */}
-      <label htmlFor="emailLogin" className="modal__label">
-        Email
+      <label className="modal__label">
+        Email{" "}
         <input
-          name="email"
           type="email"
-          className="modal__input modal__input_email"
-          id="emailLogin"
+          id="login__email"
+          className="modal__input"
           placeholder="Email"
-          value={values.email || ""}
-          onChange={handleChange}
-          required
+          value={email}
+          onChange={handleEmailChange}
         />
-        {errors.email && (
-          <p className="validation__email-message">{errors.email}</p>
-        )}
       </label>
-
-      {/* Password Input */}
-      <label htmlFor="password" className="modal__label">
-        <p className={`password__text ${passwordValidClass}`}>
-          {isPasswordValid ? "Password" : "Incorrect password"}
-        </p>
+      <label className="modal__label">
+        Password{" "}
         <input
-          name="password"
           type="password"
-          className={`modal__input ${passwordValidClass}`}
-          id="password"
+          id="login__password"
+          className="modal__input"
           placeholder="Password"
-          value={values.password || ""}
-          onChange={handleChange}
-          required
+          value={password}
+          onChange={handlePasswordChange}
         />
-        {errors.password && (
-          <p className="validation__password-message">{errors.password}</p>
-        )}
       </label>
+      <div className="modal__submit-buttons">
+        <button type="submit" className="modal__submit">
+          Log In
+        </button>
+        <button
+          type="button"
+          className="modal__submit modal__submit-alt"
+          onClick={handleRegisterClick}
+        >
+          or Sign Up
+        </button>
+      </div>
     </ModalWithForm>
   );
-}
+};
+
+export default LoginModal;
