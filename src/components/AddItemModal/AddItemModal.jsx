@@ -1,5 +1,6 @@
 import React, { useState, useContext, useCallback } from "react";
-import ModalWithForm from "../App/ModalWithForm/ModalWithForm";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function AddItemModal({ closeActiveModal, onSubmit, isOpen }) {
   const { _id: currentUserId } = useContext(CurrentUserContext) || {}; // Ensure safe access

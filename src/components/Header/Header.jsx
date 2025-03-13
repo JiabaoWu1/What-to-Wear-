@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Header.css";
 import logo from "../../assets/header__Logo.svg";
@@ -14,7 +14,6 @@ function Header({
   handleRegisterClick,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
-  const navigate = useNavigate();
 
   const name = currentUser?.name || "Guest";
   const avatar = currentUser?.avatar || null;

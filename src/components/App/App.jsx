@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { coordinates, APIkey } from "../../utils/constants";
-import Header from "./Header/Header";
-import Main from "./Main/Main";
-import ItemModal from "./ItemModal/ItemModal";
-import Footer from "./Footer/Footer";
+import Header from "../Header/Header.jsx";
+import Main from "../Main/Main";
+import ItemModal from "../ItemModal/ItemModal";
+import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import DeleteModal from "../DeleteModal/DeleteModal.jsx";
 import RegistrationModal from "../RegistrationModal/RegistrationModal.jsx";
-import { LoginModal } from "../LoginModal/LoginModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 import ClothesSection from "../ClothesSection/ClothesSection.jsx";
-import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import {
   getItems,
