@@ -3,7 +3,18 @@ import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function DeleteModal({ card, onCloseClick, isOpened, onDeleteCard }) {
-  const { currentUser } = useContext(CurrentUserContext);
+  const context = useContext(CurrentUserContext);
+
+  // 如果 context 为空，先赋予默认值，避免解构报错
+  if (!context) {
+    console.warn("CurrentUserContext is null. Make sure the provider is set.");
+    return null;
+  }
+
+  const { currentUser } = context;
+
+  console.log("Current User:", currentUser);
+  console.log("Card Owner:", card.owner);
 
   const isOwn = card.owner === currentUser?._id;
   const itemConfirmDeleteClassname = `modal__button modal__button_confirm ${
@@ -11,10 +22,15 @@ function DeleteModal({ card, onCloseClick, isOpened, onDeleteCard }) {
   }`;
 
   const handleDeleteItem = () => {
-    onDeleteCard(card._id);
+    if (isOwn) {
+      console.log(`Deleting card with ID: ${card._id}`);
+      onDeleteCard(card._id);
+    } else {
+      console.warn("User does not own this card!");
+    }
   };
 
-  if (!isOpend) return null;
+  if (!isOpened) return null;
 
   return (
     <div className={`modal ${isOpened ? "modal_opened" : ""}`}>

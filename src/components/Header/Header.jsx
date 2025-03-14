@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Header.css";
 import logo from "../../assets/header__Logo.svg";
-import avatar from "../../assets/header__Avatar.svg";
+import avatarPlaceholder from "../../assets/header__Avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 function Header({
@@ -13,11 +13,21 @@ function Header({
   handleLoginClick,
   handleRegisterClick,
 }) {
-  const { currentUser } = useContext(CurrentUserContext);
+  // 先获取 context，避免 null 解构报错
+  const context = useContext(CurrentUserContext);
+
+  if (!context) {
+    console.warn(
+      "⚠️ Warning: CurrentUserContext is null. Make sure the provider is correctly set."
+    );
+    return null; // 直接返回 null，防止渲染时报错
+  }
+
+  const { currentUser } = context;
+  console.log("Current User:", currentUser); // Debugging log
 
   const name = currentUser?.name || "Guest";
   const avatar = currentUser?.avatar || null;
-
   const userInitial = name ? name.charAt(0).toUpperCase() : "?";
 
   const currentDate = new Date().toLocaleString("default", {
@@ -25,7 +35,6 @@ function Header({
     day: "numeric",
   });
 
-  // Return the JSX code for the Header component
   return (
     <header className="header">
       <Link to="/" className="header__link">
@@ -33,10 +42,10 @@ function Header({
       </Link>
 
       <p className="header__date-and-location">
-        {currentDate}, {weatherData.city}
+        {currentDate}, {weatherData?.city || "Unknown Location"}
       </p>
       <ToggleSwitch />
-      {/* Conditional UI Based on Login Status  */}
+
       {isLoggedIn ? (
         <>
           <button
@@ -73,5 +82,5 @@ function Header({
     </header>
   );
 }
-// Export the Header component
+
 export default Header;
