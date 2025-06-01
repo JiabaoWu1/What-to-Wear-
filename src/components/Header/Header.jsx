@@ -10,18 +10,14 @@ function Header({
   handleAddClick,
   weatherData,
   isLoggedIn,
+  onLogout,
   handleLoginClick,
-  handleRegisterClick,
-}) {
+  handleRegistrationClick
+}) { 
   // 先获取 context，避免 null 解构报错
-  const context = useContext(CurrentUserContext);
+  const context = useContext(CurrentUserContext) || {currentUser: null}
 
-  if (!context) {
-    console.warn(
-      "⚠️ Warning: CurrentUserContext is null. Make sure the provider is correctly set."
-    );
-    return null; // 直接返回 null，防止渲染时报错
-  }
+ 
 
   const { currentUser } = context;
   console.log("Current User:", currentUser); // Debugging log
@@ -69,7 +65,7 @@ function Header({
       ) : (
         <>
           <button
-            onClick={handleRegisterClick}
+            onClick={handleRegistrationClick}
             className="header__register-button"
           >
             Sign Up

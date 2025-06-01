@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./SideBar.css";
 import defaultAvatar from "../../assets/sidebar__Avatar.png";

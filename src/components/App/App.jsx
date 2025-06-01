@@ -280,6 +280,9 @@ function App() {
               handleAddClick={handleAddClick}
               weatherData={weatherData}
               onLogout={handleLogout}
+              isLoggedIn={isLoggedIn}
+              handleLoginClick={handleLoginClick}
+              handleRegistrationClick={handleRegistrationClick}
             />
             <Routes>
               <Route
