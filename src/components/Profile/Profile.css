@@ -1,15 +1,4 @@
 .profile {
   display: flex;
   font-family: "Cabinet Grotesk-Bold";
-  gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.profile__sidebar {
-  display: flex;
-  gap: 20px;
-  padding-top: 20px;
-  max-height: fit-content;
 }
