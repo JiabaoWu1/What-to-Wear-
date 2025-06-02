@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; // import hooks useState and useEffect
+import  { useEffect, useState } from "react"; // import hooks useState and useEffect
 import ModalWithForm from "../ModalWithForm/ModalWithForm"; // reuse the ModalWithForm component
 
 // RegisterModal is the component for user registration with the necessary state variables

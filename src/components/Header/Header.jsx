@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom"; // Capital "L" is correct!
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Header.css";
 import logo from "../../assets/header__Logo.svg";
-import avatarPlaceholder from "../../assets/header__Avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 function Header({
@@ -13,14 +12,9 @@ function Header({
   onLogout,
   handleLoginClick,
   handleRegistrationClick
-}) { 
-  // 先获取 context，避免 null 解构报错
-  const context = useContext(CurrentUserContext) || {currentUser: null}
-
- 
-
-  const { currentUser } = context;
-  console.log("Current User:", currentUser); // Debugging log
+}) {
+  // Get user context safely
+  const { currentUser } = useContext(CurrentUserContext) || { currentUser: null };
 
   const name = currentUser?.name || "Guest";
   const avatar = currentUser?.avatar || null;
@@ -56,10 +50,19 @@ function Header({
               <p className="header__username">{name}</p>
             </Link>
             {avatar ? (
-              <img src={avatar} alt="User Avatar" className="header__avatar" />
+              <img src={avatar} alt={name} className="header__avatar" />
             ) : (
-              <div className="header__avatar-placeholder">{userInitial}</div>
+              <div className="header__avatar header__avatar-placeholder">
+                {userInitial}
+              </div>
             )}
+            <button
+              onClick={onLogout}
+              type="button"
+              className="header__logout-button"
+            >
+              Log Out
+            </button>
           </div>
         </>
       ) : (
@@ -70,7 +73,10 @@ function Header({
           >
             Sign Up
           </button>
-          <button onClick={handleLoginClick} className="header__signin-button">
+          <button
+            onClick={handleLoginClick}
+            className="header__signin-button"
+          >
             Log In
           </button>
         </>

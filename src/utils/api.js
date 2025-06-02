@@ -84,7 +84,7 @@ function removeCardLike(id) {
     });
 }
 
-function handleUpdateProfile(userData) {
+function updateProfile(userData) {
   const token = localStorage.getItem("jwt");
 
   if (!token) {
@@ -110,6 +110,54 @@ function handleUpdateProfile(userData) {
     });
 }
 
+function getCurrentUser() {
+  const token = localStorage.getItem("jwt");
+  if (!token) {
+    console.error("No token found.");
+    return Promise.reject("No token available.");
+  }
+
+  return fetch(`${baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Error fetching current user:", error);
+      return Promise.reject(error);
+    });
+}
+
+function login(email, password) {
+  return fetch(`${baseUrl}/signin`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ email, password }),
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Login error:", error);
+      return Promise.reject(error);
+    });
+}
+
+function register(name, avatar, email, password) {
+  return fetch(`${baseUrl}/signup`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ name, avatar, email, password }),
+  })
+    .then(handleRequest)
+    .catch((error) => {
+      console.error("Register error:", error);
+      return Promise.reject(error);
+    });
+}
+
+
 export {
   getItems,
   addItem,
@@ -117,5 +165,8 @@ export {
   handleRequest,
   addCardLike,
   removeCardLike,
-  handleUpdateProfile,
+  updateProfile,
+  getCurrentUser,
+  login,
+  register
 };
