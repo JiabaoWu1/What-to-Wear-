@@ -17,9 +17,13 @@ const getItems = () => {
 };
 
 const addItem = (item) => {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/items`, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(item),
   })
     .then(handleRequest)
@@ -28,6 +32,7 @@ const addItem = (item) => {
       return Promise.reject(error);
     });
 };
+
 
 const deleteItem = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {
@@ -131,7 +136,7 @@ function getCurrentUser() {
     });
 }
 
-function login(email, password) {
+function login({ email, password }) {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers,

@@ -1,12 +1,11 @@
 import "./ClothesSection.css";
-import ItemCard from "../App/ItemCard/ItemCard";
+import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ClothesSection({ handleCardClick, clothingItems, handleAddClick, handleCardLike, onlyMine = false }) {
   const { currentUser } = useContext(CurrentUserContext);
 
-  // Optionally filter for profile page (if onlyMine is true)
   const profileCards = onlyMine && currentUser
     ? clothingItems.filter(item => item.owner === currentUser._id)
     : clothingItems;

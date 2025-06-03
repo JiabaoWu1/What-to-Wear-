@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function EditProfileModal({ onClose, isOpen, onEdit }) {
@@ -20,7 +19,7 @@ function EditProfileModal({ onClose, isOpen, onEdit }) {
     e.preventDefault();
     try {
       await onEdit({ name, avatar });
-      onClose(); // Close only after successful update
+      onClose();
     } catch (error) {
       console.error("Failed to update profile:", error);
     }

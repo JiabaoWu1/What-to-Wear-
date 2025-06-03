@@ -1,47 +1,42 @@
 import { useState, useEffect } from "react";
-import ModalWithForm from "../ModalWithForm/ModalWithForm"; // reusing ModalWithForm component
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-// LoginModal is the component for user authorization with the necessary state variables
 const LoginModal = ({
   closeActiveModal,
   onLogin,
   isLoginOpen,
   handleRegisterClick,
+  loginError,
 }) => {
-  const [email, setEmail] = useState(""); // Declare the email state variable
-  const [password, setPassword] = useState(""); // Declare the password state variable
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // input handlers
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-  // handle form submit
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+
   const handleLogin = (e) => {
     e.preventDefault();
     onLogin({ email, password });
   };
 
-  // reset form values when modal opens
   useEffect(() => {
     if (isLoginOpen) {
       setEmail("");
       setPassword("");
     }
-  }, [isLoginOpen]); // run effect
+  }, [isLoginOpen]);
 
   return (
     <ModalWithForm
-      title="Sign in"
+      title="Log in"
       buttonText="Log in"
       isOpen={isLoginOpen}
       onClose={closeActiveModal}
       onSubmit={handleLogin}
+      error={loginError}
     >
       <label className="modal__label">
-        Email{" "}
+        Email
         <input
           type="email"
           id="login__email"
@@ -49,10 +44,11 @@ const LoginModal = ({
           placeholder="Email"
           value={email}
           onChange={handleEmailChange}
+          required
         />
       </label>
       <label className="modal__label">
-        Password{" "}
+        Password
         <input
           type="password"
           id="login__password"
@@ -60,18 +56,17 @@ const LoginModal = ({
           placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
+          required
         />
       </label>
       <div className="modal__submit-buttons">
-        <button type="submit" className="modal__submit">
-          Log In
-        </button>
+        <button type="submit" className="modal__submit">Log in</button>
         <button
           type="button"
           className="modal__submit modal__submit-alt"
           onClick={handleRegisterClick}
         >
-          or Sign Up
+          or Register
         </button>
       </div>
     </ModalWithForm>

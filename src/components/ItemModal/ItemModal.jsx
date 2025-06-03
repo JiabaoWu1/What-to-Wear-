@@ -1,5 +1,5 @@
 import "./ItemModal.css";
-import React from "react";
+// import React from "react";
 
 function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
   if (!isOpen) return null;
@@ -9,9 +9,9 @@ function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
       console.error("Item is missing _id", card);
       return;
     }
-
     handleDeleteItem(card._id);
   };
+
   return (
     <div className={`modal ${isOpen && "modal_opened"}`}>
       <div className="modal__content modal__content_type_image">
@@ -20,7 +20,6 @@ function ItemModal({ isOpen, onClose, handleDeleteItem, card }) {
           type="button"
           className="modal__close"
         ></button>
-
         <img src={card.imageUrl} alt="Modal Image" className="modal__image" />
         <div className="modal__footer">
           <p className="modal__footer-caption">{card.name}</p>

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom"; // Capital "L" is correct!
+import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Header.css";
 import logo from "../../assets/header__Logo.svg";
@@ -11,9 +11,8 @@ function Header({
   isLoggedIn,
   onLogout,
   handleLoginClick,
-  handleRegistrationClick
+  handleRegistrationClick,
 }) {
-  // Get user context safely
   const { currentUser } = useContext(CurrentUserContext) || { currentUser: null };
 
   const name = currentUser?.name || "Guest";

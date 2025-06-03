@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { coordinates, APIkey } from "../../utils/constants";
-import Header from "./Header/Header";
-import Main from "./Main/Main";
-import ItemModal from "./ItemModal/ItemModal";
-import Footer from "./Footer/Footer";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import ItemModal from "../ItemModal/ItemModal";
+import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import Profile from "../Profile/Profile.jsx";
-import AddItemModal from "../AddItemModal/AddItemModal.jsx";
+import Profile from "../Profile/Profile";
+import AddItemModal from "../AddItemModal/AddItemModal";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Routes, Route } from "react-router-dom";
@@ -21,12 +21,10 @@ import {
   login,
   register,
   updateProfile,
-} from "../../utils/api.js";
-import ClothesSection from "../ClothesSection/ClothesSection.jsx";
+} from "../../utils/api";
+// import ClothesSection from "./ClothesSection";
 import ProtectedRoute from "../ProtectedRoute";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-
-// Add these imports:
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegistrationModal/RegistrationModal";
 
@@ -113,8 +111,10 @@ function App() {
 
   // Add item
   const handleAddItemSubmit = (item) => {
+      console.log("Submitting new item:", item);
     addItem(item)
       .then((newItem) => {
+        console.log("Backend returned:", newItem); // Add this line
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
       })
@@ -185,16 +185,16 @@ function App() {
   };
 
   const handleRegister = ({ email, password, name, avatar }) => {
-    return register({ email, password, name, avatar })
-      .then(() => {
-        closeRegisterModal();
-        setShowLoginModal(true); // Open login modal after registering
-      })
-      .catch((err) => {
-        alert("Registration failed. Please check your input.");
-        throw err;
-      });
-  };
+  return register(name, avatar, email, password) // <-- FIXED
+    .then(() => {
+      closeRegisterModal();
+      setShowLoginModal(true);
+    })
+    .catch((err) => {
+      alert("Registration failed. Please check your input.");
+      throw err;
+    });
+};
 
   // Toggle
   const handleToggleSwitchChange = () => {
