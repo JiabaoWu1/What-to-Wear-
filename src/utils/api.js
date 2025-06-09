@@ -35,9 +35,13 @@ const addItem = (item) => {
 
 
 const deleteItem = (id) => {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then(handleRequest)
     .catch((error) => {
@@ -45,6 +49,7 @@ const deleteItem = (id) => {
       return Promise.reject(error);
     });
 };
+
 
 function addCardLike(id) {
   const token = localStorage.getItem("jwt");

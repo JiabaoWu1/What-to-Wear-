@@ -48,3 +48,29 @@
 .modal__delete-button:hover {
   text-decoration: underline;
 }
+
+.modal__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.modal__close:hover .modal__close-icon circle {
+  stroke: #222;
+  fill: #eee;
+}
+
+.modal__close-icon {
+  display: block;
+}

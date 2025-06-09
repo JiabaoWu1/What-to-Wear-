@@ -111,17 +111,20 @@ function App() {
 
   // Add item
   const handleAddItemSubmit = (item) => {
-      console.log("Submitting new item:", item);
-    addItem(item)
-      .then((newItem) => {
-        console.log("Backend returned:", newItem); // Add this line
-        setClothingItems([newItem, ...clothingItems]);
-        closeActiveModal();
-      })
-      .catch((err) => {
-        console.error("Failed to add new item:", err);
-      });
-  };
+  addItem(item)
+    .then(() => {
+      // After successful add, fetch the latest list
+      return getItems();
+    })
+    .then((items) => {
+      setClothingItems(items);
+      closeActiveModal();
+    })
+    .catch((err) => {
+      console.error("Failed to add new item:", err);
+    });
+};
+
 
   // Delete item
   const handleDeleteItem = (id) => {
