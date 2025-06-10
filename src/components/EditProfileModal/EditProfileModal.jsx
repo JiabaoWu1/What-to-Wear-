@@ -10,7 +10,7 @@ function EditProfileModal({ onClose, isOpen, onEdit }) {
   useEffect(() => {
     setName(currentUser?.name || "");
     setAvatar(currentUser?.avatar || "");
-  }, [currentUser]);
+  }, [currentUser, isOpen]); // Make sure it resets each time modal opens
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleAvatarChange = (e) => setAvatar(e.target.value);
@@ -31,8 +31,9 @@ function EditProfileModal({ onClose, isOpen, onEdit }) {
       onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      style={{ width: 448, minHeight: 264, padding: 28 }} // use inline or class
     >
-      <label htmlFor="edit-name" className="modal__label">
+      <label htmlFor="edit-name" className="modal__label" style={{ marginTop: 28 }}>
         Name *
         <input
           id="edit-name"
@@ -43,6 +44,7 @@ function EditProfileModal({ onClose, isOpen, onEdit }) {
           placeholder="Enter name"
           required
           minLength="1"
+          style={{ marginBottom: 28 }}
           onChange={handleNameChange}
         />
       </label>
@@ -57,10 +59,11 @@ function EditProfileModal({ onClose, isOpen, onEdit }) {
           placeholder="Enter avatar URL"
           required
           minLength="1"
+          style={{ marginBottom: 28 }}
           onChange={handleAvatarChange}
         />
       </label>
-      <button type="submit" className="modal__submit">
+      <button type="submit" className="modal__submit" style={{ marginTop: 28, width: 128, height: 36 }}>
         Save changes
       </button>
     </ModalWithForm>

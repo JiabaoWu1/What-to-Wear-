@@ -9,6 +9,7 @@
 .card__info_container {
   display: flex;
   position: absolute;
+  justify-content: space-between;
   top: 15px;
   gap: 10px;
 }
@@ -25,17 +26,26 @@
 
 .card__like-button {
   background: url("../../assets/like-button-inactive.svg") center no-repeat;
+   border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.card__like-btn svg {
   width: 20px;
   height: 20px;
-  border: none;
-  transition: opacity 0.1s ease-in-out;
+  display: block;
 }
 
-.card__like-button:hover {
-  opacity: 0.6;
-  cursor: pointer;
+.card__like-btn:hover svg {
+  opacity: 0.7;
 }
-
 .card__like-button_active {
   background: url("../../assets/like-button-active.svg") center no-repeat;
   width: 20px;

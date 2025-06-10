@@ -1,0 +1,99 @@
+/* Overlay */
+.modal__overlay,
+.profile-modal__overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(52, 52, 52, 0.34);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* Modal Container */
+.modal__container,
+.profile-modal__container {
+  background: #fff;
+  border-radius: 24px;
+  width: 448px;
+  min-height: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  position: relative;
+  padding: 28px 28px 36px 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+/* Close Button */
+.modal__close,
+.profile-modal__close {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 32px; height: 32px;
+  border: none;
+  background: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s;
+}
+.modal__close:hover,
+.profile-modal__close:hover {
+  color: #111;
+}
+
+/* Title */
+.modal__title, .profile-modal__label {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #222;
+}
+
+/* Label */
+.modal__label, .profile-modal__label2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #222;
+  display: block;
+}
+
+.modal__input, .profile-modal__input {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 2px solid #c4c4c4;
+  background: transparent;
+  outline: none;
+  margin-bottom: 28px;
+  color: #222;
+  transition: border-color 0.2s;
+}
+.modal__input:focus, .profile-modal__input:focus {
+  border-bottom: 2px solid #222;
+}
+
+/* Submit Button */
+.modal__submit, .profile-modal__button {
+  margin-top: 16px;
+  padding: 10px 0;
+  background: #111;
+  color: #fff;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 8px;
+  width: 128px;
+  align-self: flex-start;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal__submit:hover, .profile-modal__button:hover {
+  background: #222;
+}

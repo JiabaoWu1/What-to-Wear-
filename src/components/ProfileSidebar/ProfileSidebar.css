@@ -1,0 +1,66 @@
+.profile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 28px 28px 28px;
+  z-index: 2001;
+  animation: slideInLeft 0.3s;
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-340px);}
+  to   { transform: translateX(0);}
+}
+.profile-sidebar__close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #444;
+}
+.profile-sidebar__avatar {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 18px;
+}
+.profile-sidebar__name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+.profile-sidebar__btn {
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-size: 18px;
+  padding: 0;
+  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s;
+}
+.profile-sidebar__btn:hover {
+  color: #0d4e9e;
+  text-decoration: underline;
+}
+.profile-sidebar__btn--logout {
+  color: #e53935;
+  margin-top: 18px;
+}
+.profile-sidebar__overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.10);
+  z-index: 2000;
+}

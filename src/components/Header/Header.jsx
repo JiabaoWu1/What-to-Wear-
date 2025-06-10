@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Header.css";
 import logo from "../../assets/header__Logo.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import ProfileSidebar from "../ProfileSidebar/ProfileSidebar";
 
 function Header({
   handleAddClick,
@@ -14,10 +15,9 @@ function Header({
   handleRegistrationClick,
 }) {
   const { currentUser } = useContext(CurrentUserContext) || { currentUser: null };
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const name = currentUser?.name || "Guest";
   const avatar = currentUser?.avatar || null;
-  const userInitial = name ? name.charAt(0).toUpperCase() : "?";
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -25,62 +25,92 @@ function Header({
   });
 
   return (
-    <header className="header">
-      <Link to="/" className="header__link">
-        <img src={logo} className="header__logo" alt="Header Logo" />
-      </Link>
+    <>
+      <header className="header">
+        <Link to="/" className="header__link">
+          <img src={logo} className="header__logo" alt="Header Logo" />
+        </Link>
 
-      <p className="header__date-and-location">
-        {currentDate}, {weatherData?.city || "Unknown Location"}
-      </p>
-      <ToggleSwitch />
+        <p className="header__date-and-location">
+          {currentDate}, {weatherData?.city || "Unknown Location"}
+        </p>
 
-      {isLoggedIn ? (
-        <>
-          <button
-            onClick={handleAddClick}
-            type="button"
-            className="header__add-clothes-button"
-          >
-            + Add Clothes
-          </button>
-          <div className="header__user_container">
-            <Link to="/profile" className="header__profile-link">
-              <p className="header__username">{name}</p>
-            </Link>
-            {avatar ? (
-              <img src={avatar} alt={name} className="header__avatar" />
-            ) : (
-              <div className="header__avatar header__avatar-placeholder">
-                {userInitial}
-              </div>
-            )}
-            <button
-              onClick={onLogout}
-              type="button"
-              className="header__logout-button"
-            >
-              Log Out
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <button
-            onClick={handleRegistrationClick}
-            className="header__register-button"
-          >
-            Sign Up
-          </button>
-          <button
-            onClick={handleLoginClick}
-            className="header__signin-button"
-          >
-            Log In
-          </button>
-        </>
-      )}
-    </header>
+        <div className="header__profile-bar">
+          <ToggleSwitch />
+          {isLoggedIn && (
+            <>
+              <span
+                className="header__add-clothes"
+                onClick={handleAddClick}
+                tabIndex={0}
+                role="button"
+              >
+                + Add clothes
+              </span>
+              <span className="header__username">{name}</span>
+              {avatar ? (
+                <img
+                  src={avatar}
+                  alt={name}
+                  className="header__avatar-img"
+                  style={{ marginLeft: "12px", cursor: "pointer" }}
+                  onClick={() => setSidebarOpen(true)}
+                />
+              ) : (
+                <div
+                  className="header__avatar-placeholder"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    background: "#bbb",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: "12px",
+                    fontWeight: "bold",
+                    fontSize: "1.3rem",
+                    color: "#fff",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  {name.charAt(0).toUpperCase()}
+                </div>
+              )}
+              {/* Log Out button REMOVED from here! */}
+            </>
+          )}
+          {!isLoggedIn && (
+            <>
+              <button
+                onClick={handleRegistrationClick}
+                className="header__register-button"
+              >
+                Sign Up
+              </button>
+              <button
+                onClick={handleLoginClick}
+                className="header__signin-button"
+              >
+                Log In
+              </button>
+            </>
+          )}
+        </div>
+      </header>
+      {/* Profile Sidebar */}
+      <ProfileSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        user={currentUser}
+        onEditProfile={() => {
+          setSidebarOpen(false);
+          if (window) window.dispatchEvent(new CustomEvent("edit-profile"));
+        }}
+        onLogout={onLogout}
+      />
+    </>
   );
 }
 

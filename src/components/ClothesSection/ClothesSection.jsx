@@ -20,12 +20,12 @@ function ClothesSection({ handleCardClick, clothingItems, handleAddClick, handle
       </div>
       <ul className="clothes-section__items">
         {profileCards.map((item) => (
-          <ItemCard
-            key={item._id}
-            item={item}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-          />
+        <ItemCard
+  key={item._id}
+  item={item}
+  onCardClick={handleCardClick}
+    onCardLike={handleCardLike} 
+/>
         ))}
       </ul>
     </div>

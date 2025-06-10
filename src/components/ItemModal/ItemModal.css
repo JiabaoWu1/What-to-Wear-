@@ -63,8 +63,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  font-size: 2rem;   /* Makes the × big! */
+  font-weight: 700;
+  color: #333;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 50%;
 }
+
+.modal__close:hover {
+  background: #f0f0f0;
+  color: #000;
+}
+
 
 .modal__close:hover .modal__close-icon circle {
   stroke: #222;
