@@ -48,6 +48,9 @@ function Header({
                 + Add clothes
               </span>
               <span className="header__username">{name}</span>
+              <Link to="/profile" className="header__link" style={{ fontWeight: 500, marginLeft: 10 }}>
+        Profile
+      </Link>
               {avatar ? (
                 <img
                   src={avatar}
