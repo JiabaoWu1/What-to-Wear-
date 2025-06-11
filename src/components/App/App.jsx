@@ -48,6 +48,7 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
+  
   // Weather fetch
   useEffect(() => {
     getWeather(coordinates, APIkey)

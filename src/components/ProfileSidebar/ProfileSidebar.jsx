@@ -27,14 +27,16 @@ function ProfileSidebar({
         />
         <div className="profile-sidebar__name">{user?.name || "Profile"}</div>
         <button
-          className="profile-sidebar__btn"
-          onClick={() => {
-            onEditProfile();
-            onClose();
-          }}
-        >
-          Change profile data
-        </button>
+  className="profile-sidebar__btn"
+  onClick={() => {
+    console.log("open modal");
+    onEditProfile(); // Only this!
+    // onClose(); // Remove or comment out!
+  }}
+>
+  Change profile data
+</button>
+
         <button
           className="profile-sidebar__btn profile-sidebar__btn--logout"
           onClick={() => {
