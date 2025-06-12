@@ -143,21 +143,28 @@ function App() {
 
   // Like/unlike
   const handleCardLike = (item) => {
-    const token = localStorage.getItem("jwt");
-    const isLiked = item.likes.includes(currentUser._id);
+  const token = localStorage.getItem("jwt");
 
-    const likePromise = isLiked
-      ? removeCardLike(item._id, token)
-      : addCardLike(item._id, token);
+  // ✅ NEW SAFETY CHECK
+  if (!item || !Array.isArray(item.likes)) {
+    console.error("Invalid item.likes:", item);
+    return;
+  }
 
-    likePromise
-      .then((updatedCard) => {
-        setClothingItems((cards) =>
-          cards.map((ci) => (ci._id === item._id ? updatedCard : ci))
-        );
-      })
-      .catch((err) => console.log(err));
-  };
+  const isLiked = item.likes.includes(currentUser?._id);
+
+  const likePromise = isLiked
+    ? removeCardLike(item._id, token)
+    : addCardLike(item._id, token);
+
+  likePromise
+    .then((updatedCard) => {
+      setClothingItems((cards) =>
+        cards.map((ci) => (ci._id === item._id ? updatedCard : ci))
+      );
+    })
+    .catch((err) => console.log("Error updating like:", err));
+};
 
   // Edit profile
   const handleEditProfile = ({ name, avatar }) => {
@@ -233,7 +240,8 @@ function App() {
               onLogout={handleLogout}
               handleLoginClick={handleLoginClick}
               handleRegistrationClick={handleRegistrationClick}
-              currentUser={currentUser}
+            
+              setActiveModal ={setActiveModal}
             />
             <Routes>
               <Route
@@ -243,6 +251,8 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    handleCardLike = {handleCardLike}
+                    
                   />
                 }
               />
@@ -278,7 +288,7 @@ function App() {
             handleDeleteItem={handleDeleteItem}
           />
           <EditProfileModal
-            isOpen={showEditProfileModal}
+            isOpen={activeModal === "profile"}
             onClose={closeEditProfileModal}
             onEdit={handleEditProfile}
           />

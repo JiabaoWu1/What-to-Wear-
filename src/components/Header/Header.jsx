@@ -13,6 +13,7 @@ function Header({
   onLogout,
   handleLoginClick,
   handleRegistrationClick,
+  setActiveModal
 }) {
   const { currentUser } = useContext(CurrentUserContext) || { currentUser: null };
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -112,6 +113,7 @@ function Header({
           if (window) window.dispatchEvent(new CustomEvent("edit-profile"));
         }}
         onLogout={onLogout}
+        setActiveModal={setActiveModal}
       />
     </>
   );

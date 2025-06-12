@@ -2,8 +2,10 @@
   display: none;
   position: fixed;
   z-index: 9999;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(52, 52, 52, 0.34);
   justify-content: center;
   align-items: center;
@@ -14,123 +16,100 @@
 }
 
 .modal__close {
-    position: absolute;
-    top: 20px;
-    right: 28px;
-    width: 24px;  /* slightly larger for easier clicking */
-    height: 24px;
-    background-image: url(../../../assets/darkclose.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent; /* Don't show white behind the PNG */
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.2s;
-}
-.modal__close:focus {
-    outline: 2px solid #333;
-    outline-offset: 2px;
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../assets/darkclose.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .modal__content {
   background: #fff;
-  border-radius: 24px;
-  min-width: 448px;
-  max-width: 90vw;
-  padding: 28px 28px 36px 28px;
+  border-radius: 20px;
+  min-width: 360px;
+  padding: 28px;
   box-sizing: border-box;
   position: relative;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
 }
 
 .modal__form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal__title {
-    color: #000;
-    font-size: 16px;
-    margin-bottom: 24px;
-    margin-top: 0;
-  }
-  
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
 
 .modal__input {
-    display: flex;
-    flex-direction: column;
-    border: none;
-    border-bottom: 1px solid #000;
-    max-width: 496px;
-    width: 100%;
-    margin-bottom: 24px;
-    padding: 8px 0;
-    outline-style: none;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-bottom: 1px solid #000;
+  margin-bottom: 24px;
+  padding: 8px 0;
+  outline-style: none;
+  font-size: 16px;
+  color: #000;
 }
 
-.modal__button{
-    border: none;
-    background: none;
-    color: grey;
+.modal__error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 
-.modal__button-header{
-    border: none;
-    background: none;
-}
-
-.modal__button-div{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+.modal__button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
 }
 
 .modal__submit {
-    width: 124px;
-    height: 36px;
-    background: lightgrey;
-    border-radius: 3px;
-    color: white;
-    border: none;
+  flex: 1;
+  height: 36px;
+  background: #000;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
 }
 
-.modal__submit:hover {
-    background-color: rgba(0, 0, 0, 0.6);
-    transition: 0.5s;
-    cursor: pointer;
+.modal__submit:disabled {
+  background-color: #cfcfcf;
+  cursor: not-allowed;
 }
 
-.modal__radio-buttons {
-    border: none;
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
+.modal__submit:hover:enabled {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.modal__radio_button_input{
-    margin-right: 5px;
+.modal__alt-button {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
 }
 
-.modal__radio_button_input:checked{
-    color: black;
-}
-
-.modal__label_type_radio{
-    padding-bottom: 8px;
-}
-
-.modal__save-changes-button{
-    width: 124px;
-    height: 36px;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-family: "Cabinet Grotesk-Bold";
+.modal__alt-button:hover {
+  text-decoration: underline;
 }

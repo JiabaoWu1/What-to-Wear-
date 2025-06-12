@@ -7,6 +7,7 @@ function ProfileSidebar({
   user,
   onEditProfile,
   onLogout,
+  setActiveModal,
 }) {
   if (!isOpen) return null;
 
@@ -30,8 +31,9 @@ function ProfileSidebar({
   className="profile-sidebar__btn"
   onClick={() => {
     console.log("open modal");
-    onEditProfile(); // Only this!
-    // onClose(); // Remove or comment out!
+    onEditProfile(); 
+    setActiveModal("profile");
+    // onClose(); 
   }}
 >
   Change profile data

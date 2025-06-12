@@ -62,3 +62,19 @@
   border: 1px solid rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
+
+.card__heart-icon {
+  width: 18px;
+  height: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

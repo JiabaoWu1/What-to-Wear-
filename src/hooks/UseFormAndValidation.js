@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function UseFormAndValidation(inputValues) {
+export function useFormAndValidation(inputValues) {
   const [values, setValues] = useState(inputValues);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);

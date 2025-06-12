@@ -167,6 +167,11 @@ function register(name, avatar, email, password) {
     });
 }
 
+function request(url, options) {
+  return fetch(url, options).then(handleRequest);
+}
+
+
 
 export {
   getItems,
@@ -178,5 +183,6 @@ export {
   updateProfile,
   getCurrentUser,
   login,
-  register
+  register,
+  request
 };

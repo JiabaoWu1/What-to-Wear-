@@ -35,7 +35,7 @@ const RegistrationModal = ({
   return (
     <ModalWithForm
       title="Sign up"
-      buttonText="Next"
+      buttonText="Sign up"
       isOpen={isRegisterOpen}
       onClose={closeActiveModal}
       onSubmit={handleRegistration}
@@ -84,16 +84,13 @@ const RegistrationModal = ({
           onChange={handleAvatarChange}
         />
       </label>
-      <div className="modal__submit-buttons">
-        <button type="submit" className="modal__submit">Next</button>
-        <button
-          type="button"
-          className="modal__submit modal__submit-alt"
-          onClick={handleLoginClick}
-        >
-          or Log in
-        </button>
-      </div>
+      <button
+        type="button"
+        className="modal__submit modal__submit-alt"
+        onClick={handleLoginClick}
+      >
+        or Log in
+      </button>
     </ModalWithForm>
   );
 };
